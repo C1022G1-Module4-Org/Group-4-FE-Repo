@@ -46,6 +46,7 @@ function getProductIdAndName(id, name) {
     "Bạn có muốn xóa sản phẩm " + name + "?";
 }
 
+// list
 function renderProductList(productList) {
   let elements = "";
   let stt = 1;
@@ -69,7 +70,7 @@ function renderProductList(productList) {
               </button>
               <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" 
                 id="show-emp" data-toggle="modal" data-target="#update"
-                onclick="getProductInfo(${product.id}, '${product.name}','${product.price}', '${product.imgURL}')">
+                onclick="getProductInfo(${product.id})">
                 <i class="fas fa-edit"></i>
             </button>
           </td>
@@ -102,7 +103,7 @@ $(document).ready(function () {
   getProductList();
 });
 
-// Delete
+// delete
 $("#delete-product").submit(function (event) {
   event.preventDefault();
   let id = $("#deleteId").val();
@@ -115,11 +116,10 @@ function deleteProduct(id) {
     url: `http://localhost:8080/product/${id}`,
     success: function (data) {
       console.log("Xóa thành công");
-      getProductList();
-
       $("#exampleModal").hide();
       $("body").removeClass("modal-open");
       $(".modal-backdrop").remove();
+      getProductList();
     },
     error: function (error) {
       console.log("Lỗi, không xóa được");
@@ -184,8 +184,7 @@ function getSelectProductTypeList() {
 function showProductTypeSelectOption(productTypes) {
   let element = "";
   element += `
-  <select class="form-control" id="product-type" name="product-type">
-  <option>-- Chọn danh mục --</option>`;
+  <select class="form-control" id="product-type" name="product-type">`;
 
   for (let productType of productTypes) {
     element += `<option value="${productType.id}">`;
@@ -195,6 +194,7 @@ function showProductTypeSelectOption(productTypes) {
 
   `</select>`;
   $("#productTypeDTO").html(element);
+  $("#product-typeDTO").html(element);
 }
 
 $(document).ready(function () {
@@ -202,13 +202,99 @@ $(document).ready(function () {
 });
 
 // update
-function getProductInfo (name, price, imgURL) {
-  let updateName = $("#update-name").val();
-  let updatePrice = $("#update-price").val();
-  let updateImgURL = $("#update-imgURL").val();
+$("#update-performing").submit(function(event){
+  event.preventDefault();
+  let id = $("#update-id").val();
+  let name = $("#update-name").val();
+  let price = $("#update-price").val();
+  let imgURL = $("#update-imgURL").val();
+  let productTypeDTO = $("#product-type").val();
+  updateProduct(id, name, price, imgURL, productTypeDTO);
+})
 
-  updateName = name;
-  updatePrice = price;
-  updateImgURL = imgURL;
-  // let productTypeDTO = $("#product-type").val();
+function updateProduct(id, name, price, imgURL, productTypeDTO) {
+  debugger
+  $.ajax ({
+    type: "PUT",
+    url: `http://localhost:8080/product/edit/${id}`,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify({
+      id: id,
+      name: name,
+      price: price,
+      imgURL: imgURL,
+      productTypeDTO: { id: productTypeDTO },
+    }),
+    success: function (data) {
+      alert("Sửa sản phẩm thành công!");
+      $("#update").hide();
+      $("body").removeClass("modal-open");
+      $(".modal-backdrop").remove();
+      getProductList();
+    },
+    error: function () {
+      alert("Lỗi khi sửa sản phẩm!");
+    },
+  })
 }
+
+function getProductInfo(id) {
+  $.ajax({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    type: "get",
+    url: `http://localhost:8080/product/detail/${id}`,
+    success: function (data) {
+      getSelectProductTypeList();
+      let element = "";
+      let product = data;
+      element += 
+      `
+      
+      <div class="form-group">
+        <div id="thongbao" class="text-danger" style="text-align: center;"></div>
+      </div>
+      <div class="form-group">
+        <input type="hidden" id="update-id" value="${product.id}">
+      </div>
+      <div class="form-group">
+        <label for="update-name" class="control-label col-xs-3">Tên món ăn</label>
+        <div class="col-md-12">
+          <input type="text" class="form-control" id="update-name" value="${product.name}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="update-price" class="control-label col-xs-3">Giá bán</label>
+        <div class="col-md-12">
+          <input type="text" class="form-control" id="update-price" value="${product.price}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="update-imgURL" class="control-label col-xs-3">Ảnh sản phẩm</label>
+        <div class="col-md-12">
+          <input required type="text" class="form-control" id="update-imgURL" name="update-imgURL" value="${product.imgURL}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Danh mục</label>
+        <div class="col-md-12" id="product-typeDTO">
+        </div>
+      </div>
+      <div class="modal-footer text-center flex items-center gap-2">
+        <button type="submit" id="btnSave" class="btn btn-success">Lưu</button>
+        <button class="btn btn-danger" data-dismiss="modal">Hủy bỏ</a>
+      </div>
+      `
+      $("#update-performing").html(element);
+    },
+    error: function(error) {
+      console.log(error);
+    }
+  })
+}
+
