@@ -8,6 +8,10 @@ html {
     font-family: "Helvetica Neue";
 }
 
+.span {
+    color: red;
+}
+
 .navbar {
     height: 100px;
     background-color: #f7f7f0 !important;
@@ -23,6 +27,26 @@ html {
 .dropdown-item:hover {
     background-color: #004851 !important;
     color: #ffffff !important;
+}
+
+th, td {
+    text-align: center;
+}
+
+.page-item {
+    text-decoration: none;
+    border: 1px solid #000000;
+    margin-right: 5px;
+}
+
+.page-item.number:hover {
+    color: black;
+    background-color: #cccccc;
+}
+
+.page-item.number.active {
+    color: black !important;
+    background-color: #cccccc !important;
 }
 
 #content {
@@ -161,4 +185,8 @@ html {
 
 .submit-btn:hover {
     background-color: #0E9EBF;
+}
+
+.search-button {
+    color: #212529 !important;
 }
