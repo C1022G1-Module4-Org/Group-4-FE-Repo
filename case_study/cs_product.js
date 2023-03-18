@@ -6,7 +6,7 @@ function movePage(page) {
 function renderPage(productList) {
   let pageable = "";
   if (
-    productList.number == productList.totalPages - 1 &&
+    productList.number <= productList.totalPages - 1 &&
     productList.number > 0
   ) {
     pageable += `
@@ -29,7 +29,7 @@ function renderPage(productList) {
     pageable += pageItem.prop("outerHTML");
   }
 
-  if (productList.number == 0 && productList.number < productList.totalPages) {
+  if (productList.number >= 0 && productList.number < productList.totalPages -1) {
     pageable += `
     <button class="page-item btn btn-dark" 
     onclick="movePage(${productList.number + 1})">
@@ -168,7 +168,7 @@ function addProduct(name, price, imgURL, productTypeDTO) {
 function getSelectProductTypeList() {
   $.ajax({
     type: "GET",
-    url: `http://localhost:8080/product-type`,
+    url: `http://localhost:8080/product-type?name=${""}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -255,7 +255,6 @@ function getProductInfo(id) {
       let product = data;
       element += 
       `
-      
       <div class="form-group">
         <div id="thongbao" class="text-danger" style="text-align: center;"></div>
       </div>
