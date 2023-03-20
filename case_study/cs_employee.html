@@ -26,6 +26,8 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+
+
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container-fluid">
         <a href="/food" class="navbar-brand">
@@ -139,10 +141,12 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="row element-button">
-                        <div class="col-sm-2">
-                            <a class="btn btn-add btn-sm" href="#" id="them" title="Thêm" data-toggle="modal"
-                               data-target="#addfood"><i class="fas fa-plus"></i>
-                                Thêm nhân viên</a>
+                        <div class="element-button">
+                            <button type="button" class="btn btn-add btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal1">
+                                <i class="fas fa-plus"></i>Thêm nhân viên
+                            </button>
+
                         </div>
                     </div>
                     <table id="tableStudent" class="table table-hover table-striped table-bordered" style="width: 100%">
@@ -164,6 +168,9 @@
         </div>
     </div>
 </main>
+
+<!--xoa-->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -183,6 +190,78 @@
         </div>
     </div>
 </div>
+<!--them-->
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header col-md-9">
+                <h3 style="text-align:center; color: #ea0000;">THÊM MỚI NHÂN VIÊN</h3>
+            </div>
+            <div class="modal-body">
+                <!--                <form role="form" class="form-horizontal" id="add-product">-->
+                <div class="form-group">
+                    <div id="thongbao" class="text-danger" style="text-align: center;"></div>
+                </div>
+                <div class="form-group">
+                </div>
+                <div class="form-group">
+                    <label for="name" class="control-label col-xs-3">Tên nhân viên<span
+                            class="span">*</span></label>
+                    <div class="col-md-12">
+                        <input required type="text" class="form-control" id="name" name="name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Chức vụ<span class="span">*</span></label>
+                    <div class="col-md-12" id="positionDTO">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dateOfBirth" class="control-label col-xs-3">Ngày sinh<span class="span">*</span></label>
+                    <div class="col-md-12">
+                        <input required type="date" class="form-control" id="dateOfBirth" name="price">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label col-xs-3">Giới tính<span
+                            class="span">*</span></label>
+                    <div class="col-md-12">
+                        <input required type="radio" class="" id="men" name="gender" value="true">
+                        <label for="men">Nam</label>
+                        <input required type="radio" class="" id="women" name="gender" value="false">
+                        <label for="women">Nữ</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="control-label col-xs-3">Email<span class="span">*</span></label>
+                    <div class="col-md-12">
+                        <input required type="text" class="form-control" id="email" name="name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber" class="control-label col-xs-3">Số điện thoại<span
+                            class="span">*</span></label>
+                    <div class="col-md-12">
+                        <input required type="text" class="form-control" id="phoneNumber" name="name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="control-label col-xs-3">Địa chỉ<span class="span">*</span></label>
+                    <div class="col-md-12">
+                        <input required type="text" class="form-control" id="address" name="name">
+                    </div>
+                </div>
+                <div style="border: 0" class="modal-footer col-md-5 text-center">
+                    <button type="button" id="btnSave" class="btn btn-success" onclick="add()">Lưu</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy bỏ</button>
+                </div>
+                <!--                </form>-->
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -193,5 +272,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="../js/addfood.js"></script>
 <script src="cs_employee.js"></script>
+
 </body>
 </html>
