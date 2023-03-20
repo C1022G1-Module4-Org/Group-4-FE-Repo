@@ -1,42 +1,42 @@
-//phân trang
-function movePage(page) {
-    getCustomer(page);
-}
-
-function renderPage(customerList) {
-    let pageable = "";
-    if (customerList.number === customerList.totalPages - 1 && customerList.number > 0) {
-        pageable += `
-                    <button class="page-item btn btn-dark" 
-                            onclick="movePage(${customerList.number - 1})">
-                            <i class="ti-angle-left"></i>
-                    </button>
-                    `
-    }
-
-    for (let i = 1; i <= customerList.totalPages; i++) {
-        let pageItem = $(`<button class="page-item number btn btn-dark"
-                                  onclick="movePage(${i - 1})">
-                                  ${i}
-                          </button>`);
-        if (i === customerList.number + 1) {
-            pageItem.addClass("active");
-        } else {
-            pageItem.removeClass("active");
-        }
-        pageable += pageItem.prop('outerHTML');
-    }
-
-    if (customerList.number === 0 && customerList.number < customerList.totalPages) {
-        pageable += `
-                    <button class="page-item btn btn-dark" 
-                            onclick="movePage(${customerList.number + 1})">
-                            <i class="ti-angle-right"></i>
-                    </button>
-                    `
-    }
-    $("#pagination").html(pageable);
-}
+// //phân trang
+// function movePage(page) {
+//     getCustomer(page);
+// }
+//
+// function renderPage(customerList) {
+//     let pageable = "";
+//     if (customerList.number === customerList.totalPages - 1 && customerList.number > 0) {
+//         pageable += `
+//                     <button class="page-item btn btn-dark"
+//                             onclick="movePage(${customerList.number - 1})">
+//                             <i class="ti-angle-left"></i>
+//                     </button>
+//                     `
+//     }
+//
+//     for (let i = 1; i <= customerList.totalPages; i++) {
+//         let pageItem = $(`<button class="page-item number btn btn-dark"
+//                                   onclick="movePage(${i - 1})">
+//                                   ${i}
+//                           </button>`);
+//         if (i === customerList.number + 1) {
+//             pageItem.addClass("active");
+//         } else {
+//             pageItem.removeClass("active");
+//         }
+//         pageable += pageItem.prop('outerHTML');
+//     }
+//
+//     if (customerList.number === 0 && customerList.number < customerList.totalPages) {
+//         pageable += `
+//                     <button class="page-item btn btn-dark"
+//                             onclick="movePage(${customerList.number + 1})">
+//                             <i class="ti-angle-right"></i>
+//                     </button>
+//                     `
+//     }
+//     $("#pagination").html(pageable);
+// }
 
 
 function getCustomer(page) {
@@ -50,7 +50,7 @@ function getCustomer(page) {
         success: function (data) {
             console.log(data);
             renderCustomer(data.content);
-            renderPage(data);
+            // renderPage(data);
         },
         error: function (error) {
             console.log(error);
