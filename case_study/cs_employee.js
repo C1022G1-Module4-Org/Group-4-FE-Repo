@@ -87,6 +87,7 @@ $(document).ready(function () {
     loadList()
 });
 
+// delete
 function deleteEmployee(id) {
     $.ajax({
         type: "DELETE",
@@ -110,5 +111,84 @@ const getEmployee = (id, name) => {
     $("#employeeDelete").html(name);
 }
 
+// add
+function addEmployee(name, gender, positionDTO, email, dateOfBirth, phoneNumber, address) {
+    $.ajax({
+        type: "POST",
+        url: `http://localhost:8080/employee/`,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+            name: name,
+            positionDTO: {
+                id: positionDTO
+            },
+            dateOfBirth: dateOfBirth,
+            gender: gender,
+            email: email,
+            address: address,
+            phoneNumber: phoneNumber
+
+        }),
+        success: function (data) {
+            alert("Thêm nhân viên thành công!");
+            $("#exampleModal1").hide();
+            $("body").removeClass("modal-open");
+            $(".modal-backdrop").remove();
+            getSelectPosition();
+        },
+        error: function () {
+            alert("Lỗi khi thêm nhân viên!");
+        }
+    })
+}
+
+function add() {
+    let name = $("#name").val();
+    var gender = $('input[name="gender"]:checked').val();
+    let email = $("#email").val();
+    let positionDTO = $("#position").val();
+    // name, gender, positionDTO, email, dateOfBirth, phoneNumber, address
+    let dateOfBirth = $("#dateOfBirth").val();
+    let phoneNumber = $("#phoneNumber").val();
+    let address = $("#address").val();
+    addEmployee(name, gender, positionDTO, email, dateOfBirth, phoneNumber, address);
+};
+
+function getSelectPosition() {
+    $.ajax({
+        type: "GET",
+        url: `http://localhost:8080/position`,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        success: function (data) {
+            showPositionSelectOption(data);
+        },
+        error: function (error) {
+            console.log(error);
+        },
+    });
+}
+
+function showPositionSelectOption(position) {
+    let element = "";
+    element += `
+  <select class="form-control" id="position" name="position">`;
+
+    for (let positions of position) {
+        element += `<option value="${positions.id}">`;
+        element += positions.position;
+        `</option>`;
+    }
+
+    `</select>`;
+    $("#positionDTO").html(element);
+}
+
+$(document).ready(function () {
+    getSelectPosition();
+});
 
 
