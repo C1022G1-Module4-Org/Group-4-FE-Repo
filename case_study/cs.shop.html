@@ -157,7 +157,7 @@
 <main class="app-content" id="food">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item active"><a href="/adminFood"><b>Danh sách món ăn</b></a></li>
+            <li class="breadcrumb-item active"><a href="/adminFood"><b>Danh sách chi nhánh</b></a></li>
         </ul>
         <div id="clock"></div>
     </div>
@@ -168,8 +168,8 @@
                     <div class="row element-button">
                         <div class="col-sm-2">
                             <a class="btn btn-add btn-sm" href="#" id="them" title="Thêm" data-toggle="modal"
-                               data-target="#addfood"><i class="fas fa-plus"></i>
-                                Tạo mới món ăn</a>
+                               data-target="#addbranch"><i class="fas fa-plus"></i>
+                                Tạo mới chi nhánh</a>
                         </div>
                     </div>
                     <table id="tableStudent" class="table table-hover table-striped table-bordered" style="width: 100%">
@@ -203,13 +203,61 @@
                 <form action="" id="delete-branch">
                     <div class="modal-body">
                         <input hidden type="text" id="deleteId" name="deleteId">
-                        <p id="deleteName"></p>
+                        <p id="deleteName" ></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                         <button type="submit" class="btn btn-danger">Yes</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <!-- modal thêm mới -->
+    <div class="modal fade" id="addbranch" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false"
+         data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header col-md-9">
+                    <h3 style="text-align:center; color: #ea0000;">THÊM MỚI CHI NHÁNH</h3>
+                </div>
+                <div class="modal-body">
+                    <!--                    <form role="form" class="form-horizontal" id="add-product">-->
+                    <div class="form-group">
+                        <div id="thongbao" class="text-danger" style="text-align: center;"></div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="control-label col-xs-3">Tên chi nhánh<span class="span">*</span></label>
+                        <div class="col-md-12">
+                            <input required type="text" class="form-control" id="name" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label col-xs-3">email<span class="span">*</span></label>
+                        <div class="col-md-12">
+                            <input required type="text" class="form-control" id="email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="control-label col-xs-3">số điện thoại<span class="span">*</span></label>
+                        <div class="col-md-12">
+                            <input required type="text" class="form-control" id="phone" name="phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="control-label col-xs-3">địa chỉ<span class="span">*</span></label>
+                        <div class="col-md-12">
+                            <input required type="text" class="form-control" id="address" name="address">
+                        </div>
+                    </div>
+                    <div style="border: 0" class="modal-footer col-md-5 text-center">
+                        <button type="button" id="btnSave" class="btn btn-success" onclick="add()">Lưu</button>
+                        <button class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                    </div>
+                    <!--                    </form>-->
+                </div>
             </div>
         </div>
     </div>
