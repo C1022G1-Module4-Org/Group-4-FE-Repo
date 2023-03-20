@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <title>Product</title>
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="./cs_admin.css" />
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- or -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <link rel="stylesheet" href="../bootstrap520/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../themify-icons/themify-icons.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container-fluid">
+        <a href="/food" class="navbar-brand">
+            <img
+                    src="https://thecupscoffee.vn/wp-content/uploads/2022/04/Logo-the-cups-coffee.png"
+                    alt=""
+                    width="50"
+                    height="50"
+                    decoding="async"
+            />
+        </a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                    >
+                        Menu
+                    </a>
+                    <ul
+                            class="dropdown-menu"
+                            aria-labelledby="navbarDropdown"
+                            style="width: 240px"
+                    >
+                        <li>
+                            <a href="" class="dropdown-item fs-5">Khách hàng</a>
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item fs-5">Nhân viên</a>
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item fs-5">Chi nhánh</a>
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item fs-5">Sản phẩm</a>
+                        </li>
+                        <li>
+                            <a href="" class="dropdown-item fs-5">Order</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                            class="nav-link active fa fa-shopping-cart"
+                            aria-current="page"
+                            href="#"
+                            style="font-size: 36px"
+                    ></a>
+                </li>
+            </ul>
+            <div class="action nav-item">
+                <form method="get" class="d-flex" role="search" action="/food">
+                    <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                            name="search"
+                            value=""
+                    />
+                    <button
+                            class="btn btn-outline-success fa fa-search"
+                            type="submit"
+                    ></button>
+                </form>
+                <div class="navbar-nav">
+                    <div class="hide__on__mobile logout">
+                        <a
+                                href="/food?actionUser=login"
+                                class="text-decoration-none text-black-50"
+                        >
+                            <i
+                                    class="bx bx-log-out bx-rotate-180"
+                                    aria-hidden="true"
+                                    style="font-size: 24px"
+                            >
+                            </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-nav mt-4">
+                <div class="logout-responsive">
+                    <a
+                            href="/food?actionUser=logout"
+                            class="text-decoration-none text-black-50"
+                    >
+                        <i
+                                class="bx bx-log-out bx-rotate-180"
+                                aria-hidden="true"
+                                style="font-size: 24px"
+                        >
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="app-content" id="food">
+    <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item active"><a href="/adminFood"><b>Danh sách món ăn</b></a></li>
+        </ul>
+        <div id="clock"></div>
+    </div>
+    <div class="row mx-0">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row element-button">
+                        <div class="col-sm-2">
+                            <a class="btn btn-add btn-sm" href="#" id="them" title="Thêm" data-toggle="modal"
+                               data-target="#addfood"><i class="fas fa-plus"></i>
+                                Tạo mới món ăn</a>
+                        </div>
+                    </div>
+                    <table id="tableStudent" class="table table-hover table-striped table-bordered" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>PHONE</th>
+                            <th>ADDRESS</th>
+                            <th>Chức năng</th>
+                        </tr>
+                        </thead>
+                        <tbody id="body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal xóa -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: red">Xóa chi nhánh</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" id="delete-branch">
+                    <div class="modal-body">
+                        <input hidden type="text" id="deleteId" name="deleteId">
+                        <p id="deleteName"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<!--<script src="../js/bootstrap.js.map"></script>-->
+<script src="js.shop.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/plugins/pace.min.js"></script>
+<script type="text/javascript" src="../js/addfood.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+
+</body>
+</html>
