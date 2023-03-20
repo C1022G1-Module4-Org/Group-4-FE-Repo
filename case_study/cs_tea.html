@@ -21,11 +21,22 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
       <div class="container-fluid">
-        <a href="/food" class="navbar-brand">
+        <a href="cs_home.html" class="navbar-brand">
           <img
             src="https://thecupscoffee.vn/wp-content/uploads/2022/04/Logo-the-cups-coffee.png"
             alt=""
@@ -64,16 +75,16 @@
                 style="width: 240px"
               >
                 <li>
-                  <a href="" class="dropdown-item fs-5">Trà</a>
+                  <a href="cs_tea.html" class="dropdown-item fs-5">Trà</a>
                 </li>
                 <li>
-                  <a href="" class="dropdown-item fs-5">Cà phê</a>
+                  <a href="cs_coffee.html" class="dropdown-item fs-5">Cà phê</a>
                 </li>
                 <li>
-                  <a href="" class="dropdown-item fs-5">Trà sữa</a>
+                  <a href="cs_milk_tea.html" class="dropdown-item fs-5">Trà sữa</a>
                 </li>
                 <li>
-                  <a href="" class="dropdown-item fs-5">Đá xay</a>
+                  <a href="cs_frappe.html" class="dropdown-item fs-5">Đá xay</a>
                 </li>
               </ul>
             </li>
@@ -88,20 +99,6 @@
             </li>
           </ul>
           <div class="action nav-item">
-            <form method="get" class="d-flex" role="search" action="/food">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                name="search"
-                value=""
-              />
-              <button
-                class="btn btn-outline-success fa fa-search"
-                type="submit"
-              ></button>
-            </form>
             <div class="navbar-nav">
               <div class="hide__on__mobile logout">
                 <a
@@ -139,7 +136,7 @@
 
     <div class="bg-img"></div>
     <div class="text-content">
-      <p class="ds">TRÀ CỦA THE CUPS</p>
+      <p class="ds">SẢN PHẨM CỦA THE CUPS</p>
     </div>
 
     <div class="items">
@@ -149,56 +146,8 @@
       </div>
 
       <div class="container">
-        <div class="row">
-          <div class="col-12 mt-2 mb-4">
-            <p class="fs-lg-4" style="text-align: justify">
-              Trà của The Cups là dòng sản phẩm chủ lực thứ hai xếp sau cà phê,
-              nhóm sản phẩm trà bao gồm các thức uống pha chế từ trà xanh/ trà
-              đen/ trà ô long nguyên chất kết hợp với các loại nguyên vật liệu
-              tự nhiên như trái cây tươi, hoa, thảo mộc tạo ra những thức uống
-              ngon miệng, giàu vitamin và các dưỡng chất tốt cho sức khoẻ
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="container mb-5">
-        <div class="row">
-          <div class="col-lg-4 col-md-2 col-sm-1 text-center">
-            <img
-              width="112"
-              height="180"
-              src="../img/tra-olong-sen-vang.png"
-              alt=""
-            />
-            <h2>Trà Sen Vàng</h2>
-            <p class="mb-3 text-black-50">Tea with Lotus Seed</p>
-            <p class="fs-4">45,000</p>
-            <button type="button" class="btn btn-success">Chọn</button>
-          </div>
-          <div class="col-lg-4 col-md-2 col-sm-1 text-center">
-            <img
-              width="112"
-              height="180"
-              src="../img/tra-olong-sen-vang.png"
-              alt=""
-            />
-            <h2>Trà Sen Vàng</h2>
-            <p class="mb-3 text-black-50">Tea with Lotus Seed</p>
-            <p class="fs-4">45,000</p>
-            <button type="button" class="btn btn-success">Chọn</button>
-          </div>
-          <div class="col-lg-4 col-md-2 col-sm-1 text-center">
-            <img
-              width="112"
-              height="180"
-              src="../img/tra-olong-sen-vang.png"
-              alt=""
-            />
-            <h2>Trà Sen Vàng</h2>
-            <p class="mb-3 text-black-50">Tea with Lotus Seed</p>
-            <p class="fs-4">45,000</p>
-            <button type="button" class="btn btn-success">Chọn</button>
-          </div>
+        <div class="row" id="tea-list">
+
         </div>
       </div>
     </div>
@@ -287,6 +236,8 @@
         </div>
       </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="cs_tea.js"></script>
     <script src="../js/bootstrap.js.map"></script>
     <script src="../js_5.0.2/bootstrap.js"></script>
   </body>
