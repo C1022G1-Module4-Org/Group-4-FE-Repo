@@ -75,6 +75,8 @@ function renderProductList(productList) {
             </button>
           </td>
           </tr>`;
+
+
   }
   $("#list-product").html(elements);
 }
@@ -135,7 +137,41 @@ $("#add-product").submit(function (event) {
   let price = $("#price").val();
   let imgURL = $("#imgURL").val();
   let productTypeDTO = $("#product-type").val();
-  addProduct(name, price, imgURL, productTypeDTO);
+
+  var isValid = true;
+  if (!name) {
+    $("#name-error").text("Tên sản phẩm không được để trống.");
+    isValid = false;
+  } else if (!/^[^@;,.=+\-]+$/.test(name)) {
+    $("#name-error").text("Tên sản phẩm không được chứa các ký tự đặc biệt.");
+    isValid = false;
+  } else {
+    $("#name-error").text("");
+  }
+
+  if (!price) {
+    $("#price-error").text("Giá sản phẩm không được để trống.");
+    isValid = false;
+  } else if (price < 0) {
+    $("#price-error").text("Giá sản phẩm không được bé hơn 0");
+  } else if (!/^\d{0,8}[.]?\d{1,4}$/.test(price)) {
+    $("#price-error").text("Giá sản phẩm phải là số");
+  } else {
+    $("#price-error").text("");
+  }
+
+  if (!imgURL) {
+    $("#imgURL-error").text("URL hình ảnh không được để trống.");
+    isValid = false;
+  } else {
+    $("#imgURL-error").text("");
+  }
+
+  if (!isValid) {
+    return;
+  } else {
+    addProduct(name, price, imgURL, productTypeDTO);
+  }
 });
 
 function addProduct(name, price, imgURL, productTypeDTO) {
@@ -194,7 +230,6 @@ function showProductTypeSelectOption(productTypes) {
 
   `</select>`;
   $("#productTypeDTO").html(element);
-  $("#product-typeDTO").html(element);
 }
 
 $(document).ready(function () {
@@ -202,14 +237,91 @@ $(document).ready(function () {
 });
 
 // update
+function getSelectProductTypeListForUpdate(id) {
+  $.ajax({
+    type: "GET",
+    url: `http://localhost:8080/product-type?name=${""}`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    success: function (data) {
+      showProductTypeSelectOptionForUpdate(data, id);
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
+
+function showProductTypeSelectOptionForUpdate(productTypes, selectedId) {
+  let element = "";
+  let selectedName = "";
+
+  for (let productType of productTypes) {
+    for (let productDTO of productType.productDTOSet) {1
+      if (productDTO.id == selectedId) {
+        selectedName = productType.name;
+      }
+    }
+  }
+  element += `
+  <select class="form-control" id="product-type-DTO" name="product-type-DTO">
+  <option value="${selectedId}">${selectedName}</option>`
+  for (let productType of productTypes) {
+    if (productType.name != selectedName) {
+      element += `<option value="${productType.id}">`;
+      element += productType.name;
+      `</option>`;
+    }
+  }
+
+  `</select>`;
+  $("#product-typeDTO").html(element);
+}
+
 $("#update-performing").submit(function(event){
+  debugger
   event.preventDefault();
   let id = $("#update-id").val();
   let name = $("#update-name").val();
   let price = $("#update-price").val();
   let imgURL = $("#update-imgURL").val();
-  let productTypeDTO = $("#product-type").val();
-  updateProduct(id, name, price, imgURL, productTypeDTO);
+  let productTypeDTO = $("#product-type-DTO").val();
+
+  var isValid = true;
+  if (!name) {
+    $("#error-name").text("Tên sản phẩm không được để trống.");
+    isValid = false;
+  } else if (!/^[^@;,.=+\-]+$/.test(name)) {
+    $("#error-name").text("Tên sản phẩm không được chứa các ký tự đặc biệt.");
+    isValid = false;
+  } else {
+    $("#error-name").text("");
+  }
+
+  if (!price) {
+    $("#error-price").text("Giá sản phẩm không được để trống.");
+    isValid = false;
+  } else if (price < 0) {
+    $("#error-price").text("Giá sản phẩm không được bé hơn 0");
+  } else if (!/^\d{0,8}[.]?\d{1,4}$/.test(price)) {
+    $("#error-price").text("Giá sản phẩm phải là số");
+  } else {
+    $("#error-price").text("");
+  }
+
+  if (!imgURL) {
+    $("#error-imgURL").text("URL hình ảnh không được để trống.");
+    isValid = false;
+  } else {
+    $("#error-imgURL").text("");
+  }
+
+  if (!isValid) {
+    return;
+  } else {
+    updateProduct(id, name, price, imgURL, productTypeDTO);
+  }
 })
 
 function updateProduct(id, name, price, imgURL, productTypeDTO) {
@@ -242,6 +354,7 @@ function updateProduct(id, name, price, imgURL, productTypeDTO) {
 }
 
 function getProductInfo(id) {
+  
   $.ajax({
     headers: {
       Accept: "application/json",
@@ -250,7 +363,7 @@ function getProductInfo(id) {
     type: "get",
     url: `http://localhost:8080/product/detail/${id}`,
     success: function (data) {
-      getSelectProductTypeList();
+      getSelectProductTypeListForUpdate(id);
       let element = "";
       let product = data;
       element += 
@@ -265,18 +378,21 @@ function getProductInfo(id) {
         <label for="update-name" class="control-label col-xs-3">Tên món ăn</label>
         <div class="col-md-12">
           <input type="text" class="form-control" id="update-name" value="${product.name}">
+          <div class="error-message text-danger" id="error-name"></div>
         </div>
       </div>
       <div class="form-group">
         <label for="update-price" class="control-label col-xs-3">Giá bán</label>
         <div class="col-md-12">
           <input type="text" class="form-control" id="update-price" value="${product.price}">
+          <div class="error-message text-danger" id="error-price"></div>
         </div>
       </div>
       <div class="form-group">
         <label for="update-imgURL" class="control-label col-xs-3">Ảnh sản phẩm</label>
         <div class="col-md-12">
           <input required type="text" class="form-control" id="update-imgURL" name="update-imgURL" value="${product.imgURL}">
+          <div class="error-message" id="error-imgURL"></div>
         </div>
       </div>
       <div class="form-group">
