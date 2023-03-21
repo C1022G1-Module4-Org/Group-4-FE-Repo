@@ -66,6 +66,7 @@ function renderCustomer(customers) {
     let elements = "";
     let count = 1;
     for (let customer of customers) {
+
         elements += `
         <tr>
             <td>${count++}</td>
@@ -78,8 +79,10 @@ function renderCustomer(customers) {
             <td>${customer.customerTypeDTO.customerTypeName}</td>
             <td>
                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" 
-                       id="show-emp" data-toggle="modal" data-target="#update">
+                       id="show-emp" data-toggle="modal" data-target="#update" 
+                       onclick="detailCustomer(${customer.customerId})">
                        <i class="fas fa-edit"></i>
+                     
                </button>
                </td>
             <td>
