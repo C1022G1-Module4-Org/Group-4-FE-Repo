@@ -96,7 +96,7 @@
                 </li>
             </ul>
             <div class="action nav-item">
-                <form method="get" class="d-flex" role="search" action="/food" onsubmit="loadList(); return false;">
+                <form method="get" class="d-flex" role="search" action="" onsubmit="loadList(); return false;">
                     <input id="search"
                            class="form-control me-2"
                            type="search"
@@ -175,7 +175,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xoá</h5>
+                <h5 class="modal-title text-dark" id="exampleModalLabel">Xoá nhân viên</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="deleteEmployee">
@@ -199,7 +199,6 @@
                 <h3 style="text-align:center; color: #ea0000;">THÊM MỚI NHÂN VIÊN</h3>
             </div>
             <div class="modal-body">
-                <!--                <form role="form" class="form-horizontal" id="add-product">-->
                 <div class="form-group">
                     <div id="thongbao" class="text-danger" style="text-align: center;"></div>
                 </div>
@@ -224,7 +223,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="" class="control-label col-xs-3">Giới tính<span
+                    <label class="control-label col-xs-3">Giới tính<span
                             class="span">*</span></label>
                     <div class="col-md-12">
                         <input required type="radio" class="" id="men" name="gender" value="true">
@@ -256,12 +255,96 @@
                     <button type="button" id="btnSave" class="btn btn-success" onclick="add()">Lưu</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy bỏ</button>
                 </div>
-                <!--                </form>-->
             </div>
         </div>
     </div>
 </div>
 
+<!--sua-->
+<!--<div class="modal fade" id="edit1" tabindex="-1" aria-labelledby="edit1" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-dialog-centered" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header col-md-9">-->
+<!--                <h3 style="text-align:center; color: #ea0000;">SỬA THÔNG TIN NHÂN VIÊN</h3>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="form-group">-->
+<!--                    <div id="thongbao1" class="text-danger" style="text-align: center;"></div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="name" class="control-label col-xs-3">Tên nhân viên<span-->
+<!--                            class="span">*</span></label>-->
+<!--                    <div class="col-md-12">-->
+<!--                        <input required type="text" class="form-control" id="edit-name" name="edit-name">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="control-label">Chức vụ<span class="span">*</span></label>-->
+<!--                    <div class="col-md-12" id="edit-positionDTO">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="dateOfBirth" class="control-label col-xs-3">Ngày sinh<span class="span">*</span></label>-->
+<!--                    <div class="col-md-12">-->
+<!--                        <input required type="date" class="form-control" id="edit-dateOfBirth" name="edit-dateOfBirth">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="control-label col-xs-3">Giới tính<span-->
+<!--                            class="span">*</span></label>-->
+<!--                    <div class="col-md-12">-->
+<!--                        <input required type="radio" class="" id="edit-men" name="edit-gender" value="true">-->
+<!--                        <label for="edit-men">Nam</label>-->
+<!--                        <input required type="radio" class="" id="edit-women" name="edit-gender" value="false">-->
+<!--                        <label for="edit-women">Nữ</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="edit-email" class="control-label col-xs-3">Email<span class="span">*</span></label>-->
+<!--                    <div class="col-md-12">-->
+<!--                        <input required type="text" class="form-control" id="edit-email" name="edit-email">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="edit-phoneNumber" class="control-label col-xs-3">Số điện thoại<span-->
+<!--                            class="span">*</span></label>-->
+<!--                    <div class="col-md-12">-->
+<!--                        <input required type="text" class="form-control" id="edit-phoneNumber" name="edit-phoneNumber">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="edit-address" class="control-label col-xs-3">Địa chỉ<span class="span">*</span></label>-->
+<!--                    <div class="col-md-12">-->
+<!--                        <input required type="text" class="form-control" id="edit-address" name="edit-address">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div style="border: 0" class="modal-footer col-md-5 text-center">-->
+<!--                    <button type="button" id="btnEdit" class="btn btn-success" onclick="edit()">Lưu</button>-->
+<!--                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy bỏ</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="modal fade" id="update" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false"
+     data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="mt-3">
+                <button type="button" class="close" data-dismiss="modal">X</button>
+                <h3 style="text-align:center; color: #ea0000;">SỬA THÔNG TIN NHÂN VIÊN</h3>
+            </div>
+            <div class="modal-body" id="update-form">
+                <form role="form" class="form-horizontal" id = "update-performing">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
