@@ -39,7 +39,7 @@ function createCustomer(customerName,customerDateOfBirth,customerGender,customer
         },
     })
 }
-function selectCustomer(){
+function selectCustomerType(){
     $.ajax({
         type: "GET",
         url: `http://localhost:8080/api/customer-type`,
@@ -55,7 +55,7 @@ function selectCustomer(){
     })
 }
 function customerOption(customerTypes){
-    debugger
+
     let elements="";
     elements+=
         `<select class="form-control" id="selectCustomerType">`
@@ -68,5 +68,5 @@ function customerOption(customerTypes){
     $("#customerType").html(elements);
 }
 $(document).ready(function(){
-    selectCustomer();
+    selectCustomerType();
 })
