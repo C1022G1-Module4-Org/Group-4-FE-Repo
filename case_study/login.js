@@ -1,19 +1,17 @@
 function login() {
-    debugger
-    var email = $('#username').val();
-    var password = $('#password').val();
+    let username = $('#username').val();
+    let password = $('#password').val();
 
     $.ajax({
         url: 'http://localhost:8080/api/auth/login',
         type: 'POST',
         data: JSON.stringify({
-            "usernameOrEmail": email,
+            "usernameOrEmail": username,
             "password": password
         }),
         contentType: 'application/json',
         dataType: 'json',
         success: function(data) {
-            console.log(data.accessToken);
             // Lưu token vào local storage
             localStorage.setItem('token', data.accessToken);
 
@@ -24,4 +22,28 @@ function login() {
             console.log(xhr.responseText);
         }
     });
-}
+};
+
+function register () {
+    debugger
+    let username = $('#username-register').val();
+    let password = $('#password-register').val();
+    let email = $('#email-register').val();
+
+    $.ajax ({
+        url: `http://localhost:8080/api/auth/register`,
+        type: "post",
+        dataType: 'json',
+        data: JSON.stringify({
+            "username": username,
+            "email": email,
+            "password": password
+        }),
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+};

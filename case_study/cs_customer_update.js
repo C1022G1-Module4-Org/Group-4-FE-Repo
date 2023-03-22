@@ -13,12 +13,13 @@ function selectCustomerTypeForUpdate() {
     },
   });
 }
+
 function customerOptionForUpdate(customerTypes) {
   let elements = "";
   elements += `<select class="form-control" id="selectCustomerTypeUpdate">`;
   for (let customerType of customerTypes.content) {
-    elements += `<option value="${customerType.customerTypeId}">`;
-    elements += customerType.customerTypeName;
+    elements += `<option value="${customerType.id}">`;
+    elements += customerType.name;
     `</option>`;
   }
   `</select>`;
@@ -60,8 +61,8 @@ function updateCustomer(
     type: "PUT",
     url: "http://localhost:8080/api/customer",
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     data: JSON.stringify({
       customerId: customerId,
@@ -80,13 +81,13 @@ function updateCustomer(
       $(".modal-backdrop").remove();
       getCustomer();
     },
-      error: function (error) {
-        console.log(error)
-        for (let key of Object.keys(error.responseJSON)) {
-          if ($(`#error-${key}`)) {
-            $(`#error-${key}`).text(error.responseJSON[key]);
-          }
+    error: function (error) {
+      console.log(error);
+      for (let key of Object.keys(error.responseJSON)) {
+        if ($(`#error-${key}`)) {
+          $(`#error-${key}`).text(error.responseJSON[key]);
         }
+      }
       alert("Chỉnh Sửa Không Thành Công");
     },
   });
@@ -149,7 +150,6 @@ function detailCustomer(id) {
         <button class="btn btn-danger" data-dismiss="modal">Hủy bỏ</a>
       </div>
                       `;
-      console.log(element);
       $("#update-form").html(element);
     },
     error: function (error) {

@@ -80,10 +80,10 @@ function loadList(page) {
     url:
       `http://localhost:8080/employee?page=${page ? page : "0"}&search=` +
       search,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Bearer ' + localStorage.getItem('token')
+      },
     success: function (data) {
       if (data.content.length == 0) {
         alert("Không tìm thấy nhân viên")
@@ -109,6 +109,7 @@ function deleteEmployee(id) {
     url: `http://localhost:8080/employee/` + id,
     headers: {
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     success: function (data) {
       loadList(data);
@@ -142,6 +143,7 @@ function addEmployee(
     url: `http://localhost:8080/employee`,
     headers: {
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     data: JSON.stringify({
       name: name,
@@ -173,7 +175,6 @@ function addEmployee(
 }
 
 function add() {
-    debugger
   let name = $("#name").val();
   var gender = $('input[name="gender"]:checked').val();
   let email = $("#email").val();
@@ -258,8 +259,8 @@ function editEmployee(
     type: "PUT",
     url: `http://localhost:8080/employee/edit/` + id,
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     data: JSON.stringify({
       id: id,
@@ -314,6 +315,7 @@ function update() {
 };
 
 function getInfo(id) {
+  debugger
   $.ajax({
     type: "GET",
     url: `http://localhost:8080/employee/info/` + id,
@@ -325,6 +327,7 @@ function getInfo(id) {
       getSelectPositionForUpdate(id);
       let element = "";
       let employee = data;
+      console.log(employee.dateOfBirth);
       element += `
             <div class="modal-body">
                 <div class="form-group">

@@ -53,6 +53,7 @@ function getCustomer(page) {
     }`,
     headers: {
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     success: function (data) {
       if (data.content.length == 0) {
@@ -85,7 +86,7 @@ function renderCustomer(customers) {
             <td>${customer.customerEmail}</td>
             <td>${customer.customerAddress}</td>
             <td>${customer.customerPhoneNumber}</td>
-            <td>${customer.customerTypeDTO.customerTypeName}</td>
+            <td>${customer.customerTypeDTO.name}</td>
             <td>
                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" 
                        id="show-emp" data-toggle="modal" data-target="#update" 

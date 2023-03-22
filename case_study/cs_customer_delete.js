@@ -14,6 +14,7 @@ function deleteCustomer(id) {
     url: `http://localhost:8080/api/customer/?id=${id}`,
     headers: {
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     success: function (data) {
       console.log("Xóa thành công");

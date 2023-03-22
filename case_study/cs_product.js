@@ -83,33 +83,19 @@ function renderProductList(productList) {
 
 function getProductList(page) {
   let search = $("#search").val();
-  debugger
   $.ajax({
     type: "get",
-    // url: `http://localhost:8080/product`,
     url: `http://localhost:8080/product?name=${search}&page=${
       page ? page : "0"
     }`,
-    // beforeSend: function(xhr) {
-    //   var token = localStorage.getItem('token');
-    //   console.log(token);
-    //   xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-    // },
     headers: {
       "Content-Type": "application/json",
-    //   // "Access-Control-Allow-Origin": "*",
-    //   // "Access-Control-Allow-Headers": "Authorization",
-    //   "Authorization": 'Bearer ' + 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0b255QGdtYWlsLmNvbSIsImlhdCI6MTY3OTQ2ODA2NSwiZXhwIjoxNjgwMDcyODY1fQ.8tNU6AMVvvG5xp_4C1C0S2ZhpvtucbBQfCrwDxyNxx9fwzzZU-GkT3jxUgPEeLHO'
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
-  //   headers: {
-  //     "Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0b255QGdtYWlsLmNvbSIsImlhdCI6MTY3OTQ2ODA2NSwiZXhwIjoxNjgwMDcyODY1fQ.8tNU6AMVvvG5xp_4C1C0S2ZhpvtucbBQfCrwDxyNxx9fwzzZU-GkT3jxUgPEeLHO" // thêm mã JWT vào tiêu đề yêu cầu
-  // },
-    // dataType: 'json',
     success: function (data) {
-      debugger
+      console.log(data);
       if (data.content.length == 0) {
         alert("Không tìm thấy sản phẩm");
-        
       } 
       else {
         renderProductList(data);
@@ -117,29 +103,10 @@ function getProductList(page) {
       }
     },
     error: function (error) {
-      debugger
       console.log(error);
     },
   });
 }
-
-// function getProductList() {
-//   $.ajax({
-//     url: "http://localhost:8080/product?ok=123",
-//     type: "GET",
-//     // headers: {
-//     //     "Authorization": "Bearer " + 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0b255QGdtYWlsLmNvbSIsImlhdCI6MTY3OTQ2ODA2NSwiZXhwIjoxNjgwMDcyODY1fQ.8tNU6AMVvvG5xp_4C1C0S2ZhpvtucbBQfCrwDxyNxx9fwzzZU-GkT3jxUgPEeLHO' // thêm mã JWT vào tiêu đề yêu cầu
-//     // },
-//     success: function(data) {
-//         debugger
-//         // xử lý dữ liệu trả về
-//     },
-//     error: function(jqXHR, textStatus, errorThrown) {
-//         // xử lý lỗi
-//         debugger
-//     }
-// });
-// }
 
 $(document).ready(function () {
   getProductList();
@@ -156,6 +123,10 @@ function deleteProduct(id) {
   $.ajax({
     type: "delete",
     url: `http://localhost:8080/product/${id}`,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
+    },
     success: function (data) {
       console.log("Xóa thành công");
       $("#exampleModal").hide();
@@ -183,8 +154,8 @@ $("#add-product").submit(function (event) {
 function addProduct(name, price, imgURL, productTypeDTO) {
   $.ajax({
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     url: `http://localhost:8080/product`,
     type: "post",
@@ -223,7 +194,7 @@ function getSelectProductTypeList() {
       showProductTypeSelectOption(data);
     },
     error: function (error) {
-      console.log(error);
+      // console.log(error);
     },
   });
 }
@@ -310,8 +281,8 @@ function updateProduct(id, name, price, imgURL, productTypeDTO) {
     type: "PUT",
     url: `http://localhost:8080/product/edit/${id}`,
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     data: JSON.stringify({
       id: id,

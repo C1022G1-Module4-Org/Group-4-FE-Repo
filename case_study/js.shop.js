@@ -48,7 +48,10 @@ function showList(page) {
   // debugger
   $.ajax({
     type: "GET",
-    dataType: "json",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
+    },
     url: `http://localhost:8080/branch?name=${search}&page=${page ? page : 0}`,
     success: function (data) {
       renderPage(data);
@@ -98,7 +101,10 @@ function deleteBranch(id) {
   $.ajax({
     type: "delete",
     url: `http://localhost:8080/branch/${id}`,
-    dataType: "json",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
+    },
     success: function (data) {
       // debugger
       console.log("Xóa thành công");
@@ -130,8 +136,8 @@ function addBranch(name, email, phone, address) {
   debugger;
   $.ajax({
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     url: `http://localhost:8080/branch`,
     type: "post",
@@ -210,8 +216,8 @@ function updateBranch(id, name, email, phone, address) {
     type: "PUT",
     url: `http://localhost:8080/branch/edit/${id}`,
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     data: JSON.stringify({
       id: id,

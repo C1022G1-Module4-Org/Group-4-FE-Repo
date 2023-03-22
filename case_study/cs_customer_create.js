@@ -31,8 +31,8 @@ function createCustomer(
     type: "POST",
     url: `http://localhost:8080/api/customer`,
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     data: JSON.stringify({
       customerName: customerName,
@@ -79,8 +79,8 @@ function customerOption(customerTypes) {
   let elements = "";
   elements += `<select class="form-control" id="selectCustomerType">`;
   for (let customerType of customerTypes.content) {
-    elements += `<option value="${customerType.customerTypeId}">`;
-    elements += customerType.customerTypeName;
+    elements += `<option value="${customerType.id}">`;
+    elements += customerType.name;
     `</option>`;
   }
   `</select>`;
