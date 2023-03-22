@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <link rel="stylesheet" href="../bootstrap520/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="../themify-icons/themify- icons.css">
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -135,7 +135,7 @@
         </div>
     </div>
 </nav>
-<main class="app-content" id="food">
+<main class="app-content" id="employee">
     <div class="row mx-0">
         <div class="col-md-12">
             <div class="tile">
@@ -157,7 +157,9 @@
                             <th>Giới tính</th>
                             <th>Chức vụ</th>
                             <th>Email</th>
-                            <th>Chức năng</th>
+                            3
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody id="listEmployee"></tbody>
@@ -168,7 +170,85 @@
         </div>
     </div>
 </main>
+<section class="footer text-light" style="background-color: #03373e">
+    <div class="container">
+        <div class="row" data-aos="fade-right">
+            <div class="col-lg-4 py-4 py-md-5">
+                <div>
+                    <h4 class="py-2">Liên lạc với chúng tôi</h4>
+                    <div class="d-flex align-items-center py-2">
+                        <i class="ti-location-pin"></i>
+                        <a href="#about">
+                            <p class="ms-3 mb-0">123 Street, New York, USA</p>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center py-2">
+                        <i class="ti-mobile"></i>
+                        <a href="#">
+                            <p class="ms-3 mb-0">+01 2000 800 9999</p>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center py-2">
+                        <i class="ti-email"></i>
+                        <a href="#">
+                            <p class="ms-3 mb-0">info@domain.com</p>
+                        </a>
+                    </div>
+                    <div class="footer-icon d-flex align-items-center py-2">
+                        <i class="ti-instagram"></i>
+                        <i class="ti-facebook"></i>
+                        <i class="ti-twitter-alt"></i>
+                        <i class="ti-linkedin"></i>
+                        <i class="ti-youtube"></i>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-lg-4 py-4 py-md-5">
+                <div>
+                    <h4 class="py-2">Truy cập nhanh</h4>
+                    <div class="d-flex align-items-center py-2">
+                        <i class="ti-angle-right"></i>
+                        <a href="#">
+                            <p class="ms-3 mb-0">For Artists</p>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center py-2">
+                        <i class="ti-angle-right"></i>
+                        <a href="#">
+                            <p class="ms-3 mb-0">Developers</p>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center py-2">
+                        <i class="ti-angle-right"></i>
+                        <a href="#">
+                            <p class="ms-3 mb-0">Advertisement</p>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center py-2">
+                        <i class="ti-angle-right"></i>
+                        <a href="#">
+                            <p class="ms-3 mb-0">Investors</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 py-4 py-md-5">
+                <div class="d-flex align-items-center">
+                    <h4>Đăng ký nhận thông tin</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control p-2" placeholder="Nhập email của bạn tại đây"
+                               aria-label="Recipient's email" style="border-radius: 12px 12px 12px 12px; height: 50px"/>
+                        <button type="button" class="submit-btn">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <!--xoa-->
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -206,25 +286,27 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="control-label col-xs-3">Tên nhân viên<span
-                            class="span">*</span></label>
+                            class="span" style="color: red">*</span></label>
                     <div class="col-md-12">
                         <input required type="text" class="form-control" id="name" name="name">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Chức vụ<span class="span">*</span></label>
+                    <label class="control-label">Chức vụ<span
+                            class="span" style="color: red">*</span></label>
                     <div class="col-md-12" id="positionDTO">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="dateOfBirth" class="control-label col-xs-3">Ngày sinh<span class="span">*</span></label>
+                    <label for="dateOfBirth" class="control-label col-xs-3">Ngày sinh<span
+                            class="span" style="color: red">*</span></label>
                     <div class="col-md-12">
                         <input required type="date" class="form-control" id="dateOfBirth" name="price">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-xs-3">Giới tính<span
-                            class="span">*</span></label>
+                            class="span" style="color: red">*</span></label>
                     <div class="col-md-12">
                         <input required type="radio" class="" id="men" name="gender" value="true">
                         <label for="men">Nam</label>
@@ -233,20 +315,22 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="control-label col-xs-3">Email<span class="span">*</span></label>
+                    <label for="email" class="control-label col-xs-3">Email<span
+                            class="span" style="color: red">*</span></label>
                     <div class="col-md-12">
                         <input required type="text" class="form-control" id="email" name="name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber" class="control-label col-xs-3">Số điện thoại<span
-                            class="span">*</span></label>
+                            class="span" style="color: red">*</span></label>
                     <div class="col-md-12">
                         <input required type="text" class="form-control" id="phoneNumber" name="name">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="address" class="control-label col-xs-3">Địa chỉ<span class="span">*</span></label>
+                    <label for="address" class="control-label col-xs-3">Địa chỉ<span
+                            class="span" style="color: red">*</span></label>
                     <div class="col-md-12">
                         <input required type="text" class="form-control" id="address" name="name">
                     </div>
@@ -338,7 +422,7 @@
                 <h3 style="text-align:center; color: #ea0000;">SỬA THÔNG TIN NHÂN VIÊN</h3>
             </div>
             <div class="modal-body" id="update-form">
-                <form role="form" class="form-horizontal" id = "update-performing">
+                <form role="form" class="form-horizontal" id="update-performing">
                 </form>
             </div>
         </div>

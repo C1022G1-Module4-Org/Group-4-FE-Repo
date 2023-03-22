@@ -6,16 +6,16 @@ function renderPage(employeeList) {
     let page = "";
     if (employeeList.number == employeeList.totalPages - 1 && employeeList.number > 0) {
         page += `
-    <button class="page-item btn btn-primary" 
+    <button class="page-item btn btn-primary m-1" 
     onclick="movePage(${employeeList.number - 1})">
     <i class="ti-angle-left"></i>
     </button>
     `
     }
     for (let i = 1; i <= employeeList.totalPages; i++) {
-        let pageItem = $(`<button class="page-item number btn btn-primary"
+        let pageItem = $(`<button class="page-item number btn btn-primary m-1"
                       onclick="movePage(${i - 1})">
-                      ${i}
+                      ${i} 
                       </button>`);
         if (i === employeeList.number + 1) {
             pageItem.addClass("active");
@@ -27,7 +27,7 @@ function renderPage(employeeList) {
 
     if (employeeList.number == 0 && employeeList.number < employeeList.totalPages) {
         page += `
-    <button class="page-item btn btn-primary" 
+    <button class="page-item btn btn-primary m-1"  
     onclick="movePage(${employeeList.number + 1})">
     <i class="ti-angle-right"></i>
     </button>
@@ -38,6 +38,7 @@ function renderPage(employeeList) {
 
 function renderEmployee(employee) {
     let element = "";
+    let stt = 1;
     for (let employees of employee) {
         let gender = employees.gender;
         if (gender) {
@@ -47,14 +48,17 @@ function renderEmployee(employee) {
         }
         element += `
        <tr>
-        <td>${employees.id}</td>
+        <td>${stt++}</td>
         <td>${employees.name}</td>
         <td>${gender}</td>
         <td>${employees.positionDTO.position}</td>
         <td>${employees.email}</td>
-        <td><button onclick=getEmployee('${employees.id}','${employees.name}') id="deleteId" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <td><button onclick=getEmployee('${employees.id}','${employees.name}') id="deleteId" type="button" 
+        class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
         <i class="fas fa-trash-alt"></i>
         </button>
+        </td>
+        <td>
          <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" 
                 id="show-emp" data-toggle="modal" data-target="#update"
                 onclick="getInfo(${employees.id})">
@@ -132,7 +136,7 @@ function addEmployee(name, gender, positionDTO, email, dateOfBirth, phoneNumber,
             address: address,
             phoneNumber: phoneNumber
         }),
-        success: function (data) {
+        success: function () {
             alert("Thêm nhân viên thành công!");
             $("#exampleModal1").hide();
             $("body").removeClass("modal-open");
@@ -228,7 +232,6 @@ function editEmployee(id, name, gender, positionDTO, email, dateOfBirth, phoneNu
             email: email,
             address: address,
             phoneNumber: phoneNumber
-
         }),
         success: function () {
             alert("Sửa thông tin nhân viên thành công!");
@@ -254,7 +257,7 @@ $("#update-performing").submit(function () {
     let dateOfBirth = $("#edit-dateOfBirth").val();
     let phoneNumber = $("#edit-phoneNumber").val();
     let address = $("#edit-address").val();
-    editEmployee(id,name, gender, positionDTO, email, dateOfBirth, phoneNumber, address);
+    editEmployee(id, name, gender, positionDTO, email, dateOfBirth, phoneNumber, address);
 })
 
 function getInfo(id) {
@@ -337,11 +340,12 @@ function getInfo(id) {
         }
     })
 }
+
 function showPositionSelectOptionUpdate(positions, id) {
     let element = "";
-    let selectPosition="";
+    let selectPosition = "";
     for (let position of positions) {
-        for (let employee of position.employeeSet) {1
+        for (let employee of position.employeeSet) {
             if (employee.id === id) {
                 selectPosition = position.position;
             }
@@ -354,7 +358,7 @@ function showPositionSelectOptionUpdate(positions, id) {
     ;
 
     for (let position of positions) {
-        if (position.position!== selectPosition){
+        if (position.position !== selectPosition) {
             element += `<option value="${position.id}">`;
             element += position.position;
             `</option>`;
