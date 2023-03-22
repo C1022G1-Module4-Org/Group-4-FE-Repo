@@ -83,6 +83,7 @@ function renderProductList(productList) {
 
 function getProductList(page) {
   let search = $("#search").val();
+  debugger
   $.ajax({
     type: "get",
     // url: `http://localhost:8080/product`,
@@ -96,15 +97,19 @@ function getProductList(page) {
     // },
     headers: {
       "Content-Type": "application/json",
-      // "Access-Control-Allow-Origin": "*",
-      // "Access-Control-Allow-Headers": "Authorization",
-      // "Authorization": 'Bearer ' + localStorage.getItem('token')
+    //   // "Access-Control-Allow-Origin": "*",
+    //   // "Access-Control-Allow-Headers": "Authorization",
+    //   "Authorization": 'Bearer ' + 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0b255QGdtYWlsLmNvbSIsImlhdCI6MTY3OTQ2ODA2NSwiZXhwIjoxNjgwMDcyODY1fQ.8tNU6AMVvvG5xp_4C1C0S2ZhpvtucbBQfCrwDxyNxx9fwzzZU-GkT3jxUgPEeLHO'
     },
+  //   headers: {
+  //     "Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0b255QGdtYWlsLmNvbSIsImlhdCI6MTY3OTQ2ODA2NSwiZXhwIjoxNjgwMDcyODY1fQ.8tNU6AMVvvG5xp_4C1C0S2ZhpvtucbBQfCrwDxyNxx9fwzzZU-GkT3jxUgPEeLHO" // thêm mã JWT vào tiêu đề yêu cầu
+  // },
     // dataType: 'json',
     success: function (data) {
-      console.log(data);
+      debugger
       if (data.content.length == 0) {
         alert("Không tìm thấy sản phẩm");
+        
       } 
       else {
         renderProductList(data);
@@ -112,10 +117,29 @@ function getProductList(page) {
       }
     },
     error: function (error) {
+      debugger
       console.log(error);
     },
   });
 }
+
+// function getProductList() {
+//   $.ajax({
+//     url: "http://localhost:8080/product?ok=123",
+//     type: "GET",
+//     // headers: {
+//     //     "Authorization": "Bearer " + 'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0b255QGdtYWlsLmNvbSIsImlhdCI6MTY3OTQ2ODA2NSwiZXhwIjoxNjgwMDcyODY1fQ.8tNU6AMVvvG5xp_4C1C0S2ZhpvtucbBQfCrwDxyNxx9fwzzZU-GkT3jxUgPEeLHO' // thêm mã JWT vào tiêu đề yêu cầu
+//     // },
+//     success: function(data) {
+//         debugger
+//         // xử lý dữ liệu trả về
+//     },
+//     error: function(jqXHR, textStatus, errorThrown) {
+//         // xử lý lỗi
+//         debugger
+//     }
+// });
+// }
 
 $(document).ready(function () {
   getProductList();
@@ -199,7 +223,7 @@ function getSelectProductTypeList() {
       showProductTypeSelectOption(data);
     },
     error: function (error) {
-      // console.log(error);
+      console.log(error);
     },
   });
 }
