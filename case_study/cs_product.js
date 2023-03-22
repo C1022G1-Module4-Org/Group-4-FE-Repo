@@ -11,7 +11,7 @@ function renderPage(productList) {
   ) {
     pageable += `
     <button class="page-item btn btn-dark" 
-    onclick="movePage(${productList.number - 1})">
+    onclick="movePage(${productList.number - 1})" >
     <i class="ti-angle-left"></i>
     </button>
     `;
@@ -49,10 +49,12 @@ function getProductIdAndName(id, name) {
 // list
 function renderProductList(productList) {
   let elements = "";
-  let stt = 1;
+  let stt = (productList.number - 1)*productList.pageable.pageSize+ 4;
+  console.log(productList.number, productList.pageSize);
 
   for (let product of productList.content) {
-    elements += `<tr>
+    elements += 
+          `<tr>
           <td>${stt++}</td>
           <td>${product.name}</td>
           <td><img src="${product.imgURL}" alt="" width="100px;"></td>
@@ -75,8 +77,6 @@ function renderProductList(productList) {
             </button>
           </td>
           </tr>`;
-
-
   }
   $("#list-product").html(elements);
 }
@@ -85,15 +85,31 @@ function getProductList(page) {
   let search = $("#search").val();
   $.ajax({
     type: "get",
+    // url: `http://localhost:8080/product`,
     url: `http://localhost:8080/product?name=${search}&page=${
       page ? page : "0"
     }`,
+    // beforeSend: function(xhr) {
+    //   var token = localStorage.getItem('token');
+    //   console.log(token);
+    //   xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    // },
     headers: {
       "Content-Type": "application/json",
+      // "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Headers": "Authorization",
+      // "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
+    // dataType: 'json',
     success: function (data) {
-      renderProductList(data);
-      renderPage(data);
+      console.log(data);
+      if (data.content.length == 0) {
+        alert("Không tìm thấy sản phẩm");
+      } 
+      else {
+        renderProductList(data);
+        renderPage(data);
+      }
     },
     error: function (error) {
       console.log(error);
@@ -131,47 +147,13 @@ function deleteProduct(id) {
 
 // add
 $("#add-product").submit(function (event) {
-  debugger;
   event.preventDefault();
   let name = $("#name").val();
   let price = $("#price").val();
   let imgURL = $("#imgURL").val();
   let productTypeDTO = $("#product-type").val();
 
-  var isValid = true;
-  if (!name) {
-    $("#name-error").text("Tên sản phẩm không được để trống.");
-    isValid = false;
-  } else if (!/^[^@;,.=+\-]+$/.test(name)) {
-    $("#name-error").text("Tên sản phẩm không được chứa các ký tự đặc biệt.");
-    isValid = false;
-  } else {
-    $("#name-error").text("");
-  }
-
-  if (!price) {
-    $("#price-error").text("Giá sản phẩm không được để trống.");
-    isValid = false;
-  } else if (price < 0) {
-    $("#price-error").text("Giá sản phẩm không được bé hơn 0");
-  } else if (!/^\d{0,8}[.]?\d{1,4}$/.test(price)) {
-    $("#price-error").text("Giá sản phẩm phải là số");
-  } else {
-    $("#price-error").text("");
-  }
-
-  if (!imgURL) {
-    $("#imgURL-error").text("URL hình ảnh không được để trống.");
-    isValid = false;
-  } else {
-    $("#imgURL-error").text("");
-  }
-
-  if (!isValid) {
-    return;
-  } else {
-    addProduct(name, price, imgURL, productTypeDTO);
-  }
+  addProduct(name, price, imgURL, productTypeDTO);
 });
 
 function addProduct(name, price, imgURL, productTypeDTO) {
@@ -195,7 +177,12 @@ function addProduct(name, price, imgURL, productTypeDTO) {
       $(".modal-backdrop").remove();
       getProductList();
     },
-    error: function () {
+    error: function (error) {
+      for (let key of Object.keys(error.responseJSON)) {
+        if ($(`#${key}-error`)) {
+          $(`#${key}-error`).text(error.responseJSON[key]);
+        }
+      }
       alert("Lỗi khi thêm sản phẩm!");
     },
   });
@@ -212,7 +199,7 @@ function getSelectProductTypeList() {
       showProductTypeSelectOption(data);
     },
     error: function (error) {
-      console.log(error);
+      // console.log(error);
     },
   });
 }
@@ -256,17 +243,19 @@ function getSelectProductTypeListForUpdate(id) {
 function showProductTypeSelectOptionForUpdate(productTypes, selectedId) {
   let element = "";
   let selectedName = "";
+  let id = 0;
 
   for (let productType of productTypes) {
     for (let productDTO of productType.productDTOSet) {1
       if (productDTO.id == selectedId) {
         selectedName = productType.name;
+        id = productType.id;
       }
     }
   }
   element += `
   <select class="form-control" id="product-type-DTO" name="product-type-DTO">
-  <option value="${selectedId}">${selectedName}</option>`
+  <option value="${id}">${selectedName}</option>`
   for (let productType of productTypes) {
     if (productType.name != selectedName) {
       element += `<option value="${productType.id}">`;
@@ -280,7 +269,7 @@ function showProductTypeSelectOptionForUpdate(productTypes, selectedId) {
 }
 
 $("#update-performing").submit(function(event){
-  debugger
+  
   event.preventDefault();
   let id = $("#update-id").val();
   let name = $("#update-name").val();
@@ -288,44 +277,11 @@ $("#update-performing").submit(function(event){
   let imgURL = $("#update-imgURL").val();
   let productTypeDTO = $("#product-type-DTO").val();
 
-  var isValid = true;
-  if (!name) {
-    $("#error-name").text("Tên sản phẩm không được để trống.");
-    isValid = false;
-  } else if (!/^[^@;,.=+\-]+$/.test(name)) {
-    $("#error-name").text("Tên sản phẩm không được chứa các ký tự đặc biệt.");
-    isValid = false;
-  } else {
-    $("#error-name").text("");
-  }
-
-  if (!price) {
-    $("#error-price").text("Giá sản phẩm không được để trống.");
-    isValid = false;
-  } else if (price < 0) {
-    $("#error-price").text("Giá sản phẩm không được bé hơn 0");
-  } else if (!/^\d{0,8}[.]?\d{1,4}$/.test(price)) {
-    $("#error-price").text("Giá sản phẩm phải là số");
-  } else {
-    $("#error-price").text("");
-  }
-
-  if (!imgURL) {
-    $("#error-imgURL").text("URL hình ảnh không được để trống.");
-    isValid = false;
-  } else {
-    $("#error-imgURL").text("");
-  }
-
-  if (!isValid) {
-    return;
-  } else {
-    updateProduct(id, name, price, imgURL, productTypeDTO);
-  }
+  updateProduct(id, name, price, imgURL, productTypeDTO);
 })
 
 function updateProduct(id, name, price, imgURL, productTypeDTO) {
-  debugger
+  
   $.ajax ({
     type: "PUT",
     url: `http://localhost:8080/product/edit/${id}`,
@@ -347,7 +303,12 @@ function updateProduct(id, name, price, imgURL, productTypeDTO) {
       $(".modal-backdrop").remove();
       getProductList();
     },
-    error: function () {
+    error: function (error) {
+      for (let key of Object.keys(error.responseJSON)) {
+        if ($(`#error-${key}`)) {
+          $(`#error-${key}`).text(error.responseJSON[key]);
+        }
+      }
       alert("Lỗi khi sửa sản phẩm!");
     },
   })
