@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Helvetica Neue";
+}
+
+.navbar {
+    height: 100px;
+    background-color: #f7f7f0 !important;
+    z-index: 19;
+}
+
+.nav-item {
+    font-size: 26px;
+    font-weight: 700;
+    color: #004851 !important;
+}
+
+.dropdown-item:hover {
+    background-color: #004851 !important;
+    color: #ffffff !important;
+}
+
+#content {
+    background: rgba(0, 0, 0, 0.04);
+    padding: 50px 70px;
+}
+
+#content .content-header {
+    margin: auto;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.footer-icon i {
+    display: inline-block;
+    width: 30px;
+    font-size: 24px;
+}
+
+.footer-icon i:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.card-title{
+    text-align:center;
+    display: flex;
+    justify-content: center;
+    color:red;
+}
+
+.logout,
+.logout-responsive {
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    padding: 8px;
+    color: #000;
+    cursor: pointer;
+    text-align: center;
+}
+
+.logout {
+    display: block
+}
+
+.logout:hover {
+    opacity: 0.8;
+}
+
+.logout-responsive {
+    max-width: 150px;
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .logout {
+        display: none;
+    }
+
+    .logout-responsive {
+        display: block;
+    }
+
+    #content {
+        padding: 24px;
+    }
+
+    .ds {
+        display: none;
+    }
+}
+
+.bg-img {
+    background: url('https://thecupscoffee.vn/wp-content/uploads/2022/09/Frame-398.jpg') top center / cover no-repeat;
+    margin-top: 110px;
+    padding-top: 50%;
+    position: relative;
+}
+
+.bg-img::before {
+    content: "";
+    position: absolute;
+    background-color: #000;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.text-content {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    z-index: 2;
+}
+
+
+.ds {
+    color: #ffffff;
+    font-size: 80px;
+    font-weight: 500;
+}
+
+
+.items {
+    margin: 70px 0;
+    position: relative;
+
+}
+
+.submit-btn {
+    background-color: #004851;
+    color: #fff;
+    transition: all .3s;
+    width: 70px;
+    margin-left: 10px !important;
+    font-weight: 500;
+}
+
+.submit-btn:hover {
+    background-color: #0E9EBF;
+}

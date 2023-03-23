@@ -41,7 +41,7 @@ function createCustomer(
       customerEmail: customerEmail,
       customerAddress: customerAddress,
       customerPhoneNumber: customerPhoneNumber,
-      customerTypeDTO: { customerTypeId: customerType },
+      customerTypeDTO: { id: customerType },
     }),
     success: function (data) {
       alert("Thêm mới thành công");
@@ -66,6 +66,7 @@ function selectCustomerType() {
     url: `http://localhost:8080/api/customer-type`,
     headers: {
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     success: function (data) {
       customerOption(data);

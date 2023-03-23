@@ -44,8 +44,8 @@ function renderPage(employeeList) {
 
 function renderEmployee(employee) {
   let element = "";
-  let stt = 1;
-  for (let employees of employee) {
+  let stt = (employee.number - 1)*employee.pageable.pageSize + 6;
+  for (let employees of employee.content) {
     let gender = employees.gender;
     if (gender) {
       gender = "Nam";
@@ -88,7 +88,7 @@ function loadList(page) {
       if (data.content.length == 0) {
         alert("Không tìm thấy nhân viên")
       } else {
-        renderEmployee(data.content);
+        renderEmployee(data);
         renderPage(data);
       }
     },
@@ -254,7 +254,7 @@ function editEmployee(
   phoneNumber,
   address
 ) {
-  debugger;
+
   $.ajax({
     type: "PUT",
     url: `http://localhost:8080/employee/edit/` + id,
@@ -276,7 +276,7 @@ function editEmployee(
     }),
     success: function () {
       alert("Sửa thông tin nhân viên thành công!");
-      $("#edit1").hide();
+      $("#update").hide();
       $("body").removeClass("modal-open");
       $(".modal-backdrop").remove();
       loadList();
@@ -296,7 +296,14 @@ function editEmployee(
 function update() {
   let id = $("#update-id").val();
   let name = $("#edit-name").val();
-  let gender = $('input[name="edit-gender"]:checked').val();
+  // let gender = $('input[name="edit-gender"]:checked').val();
+  let customerGender;
+  for (let el of document.getElementsByClassName('edit-gender')) {
+      if (el.checked) {
+          customerGender = el.value;
+          break;
+      }
+  }
   let email = $("#edit-email").val();
   let positionDTO = $("#position1").val();
   let dateOfBirth = $("#edit-dateOfBirth").val();
@@ -320,8 +327,8 @@ function getInfo(id) {
     type: "GET",
     url: `http://localhost:8080/employee/info/` + id,
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     success: function (data) {
       getSelectPositionForUpdate(id);
@@ -393,7 +400,10 @@ function getInfo(id) {
                 </div>
             </div>`;
       $("#update-form").html(element);
+      let employeeGender = `[value="${employee.gender}"]`;
+            $('input[name="edit-gender"]').filter(employeeGender).attr('checked', true);
     },
+    
     error: function (error) {
       console.log(error);
     },
@@ -402,16 +412,18 @@ function getInfo(id) {
 function showPositionSelectOptionUpdate(positions, id) {
   let element = "";
   let selectPosition = "";
+  let choicedId = 0;
   for (let position of positions) {
     for (let employee of position.employeeSet) {
       if (employee.id === id) {
         selectPosition = position.position;
+        choicedId = position.id;
       }
     }
   }
   element += `
   <select class="form-control" id="position1" name="position1">
- <option value="${id}">${selectPosition}</option>
+ <option value="${choicedId}">${selectPosition}</option>
 `;
 
   for (let position of positions) {

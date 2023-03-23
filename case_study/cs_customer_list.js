@@ -59,7 +59,7 @@ function getCustomer(page) {
       if (data.content.length == 0) {
         alert("Không tìm thấy khách hàng");
       } else {
-        renderCustomer(data.content);
+        renderCustomer(data);
         renderPage(data);
       }
     },
@@ -75,8 +75,8 @@ $(document).ready(function () {
 
 function renderCustomer(customers) {
   let elements = "";
-  let count = 1;
-  for (let customer of customers) {
+  let count = (customers.number - 1)*customers.pageable.pageSize + 6;
+  for (let customer of customers.content) {
     elements += `
         <tr>
             <td>${count++}</td>

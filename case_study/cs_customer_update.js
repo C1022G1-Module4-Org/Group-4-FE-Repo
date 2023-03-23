@@ -30,7 +30,13 @@ function update() {
   let customerId = $("#update-id").val();
   let customerName = $("#update-name").val();
   let customerDateOfBirth = $("#update-dateOfBirth").val();
-  let customerGender = $("#update-gender").val();
+  let customerGender;
+    for (let el of document.getElementsByClassName('update-gender')) {
+        if (el.checked) {
+            customerGender = el.value;
+            break;
+        }
+    }
   let customerEmail = $("#update-email").val();
   let customerAddress = $("#update-address").val();
   let customerPhoneNumber = $("#update-phoneNumber").val();
@@ -72,7 +78,7 @@ function updateCustomer(
       customerEmail: customerEmail,
       customerAddress: customerAddress,
       customerPhoneNumber: customerPhoneNumber,
-      customerTypeDTO: { customerTypeId: customerType },
+      customerTypeDTO: { id: customerType },
     }),
     success: function () {
       alert("Chỉnh Sửa thông tin khách hàng Thành Công");
@@ -85,6 +91,7 @@ function updateCustomer(
       console.log(error);
       for (let key of Object.keys(error.responseJSON)) {
         if ($(`#error-${key}`)) {
+          console.log(key);
           $(`#error-${key}`).text(error.responseJSON[key]);
         }
       }
@@ -104,14 +111,13 @@ function detailCustomer(id) {
       selectCustomerTypeForUpdate();
       let element = "";
       let customers = data;
-      console.log(data);
       element = `
                 <input type="hidden" id="update-id" value="${customers.customerId}">
                     <div class="form-group">
                         <label for="update-name">Tên khách hàng</label>
                         <input type="text"
                                class="form-control" name="update-name" id="update-name" value="${customers.customerName}">
-                               <div class="error-message text-danger" id="error-update-name"></div>
+                               <div class="error-message text-danger" id="error-customerName"></div>
                                </div>  
                       <div class="form-group">
                         <label for="update-dateOfBirth-name">Ngày sinh</label>
@@ -120,14 +126,14 @@ function detailCustomer(id) {
                     </div>
                     <div class="form-group">
                     <label for="update-gender">Giới tính</label>
-                    <input type="text"
-                           class="form-control" name="update-gender" id="update-gender" value="${customers.customerGender}">
+                    <input type="radio" value="Nam" name="update-gender" class="update-gender" checked/> Nam
+                   <input type="radio" value="Nữ" name="update-gender" class="update-gender"/> Nữ
                      </div>
                     <div class="form-group">
                         <label for="update-email">Email</label>
                         <input type="text"
                                class="form-control" name="update-email" id="update-email"  value="${customers.customerEmail}">
-                               <div class="error-message text-danger" id="error-update-email"></div>
+                               <div class="error-message text-danger" id="error-customerEmail"></div>
                                </div>
                     <div class="form-group">
                     <label for="update-address">Địa chỉ</label>
@@ -139,7 +145,7 @@ function detailCustomer(id) {
                     <label for="update-phoneNumber">Số điện thoại</label>
                     <input type="text"
                       class="form-control" name="update-phoneNumber" id="update-phoneNumber" value="${customers.customerPhoneNumber}">
-                      <div class="error-message text-danger" id="error-update-phoneNumber"></div>
+                      <div class="error-message text-danger" id="error-customerPhoneNumber"></div>
                       </div>
                       <div class="form-group">
                    <label for="customerType">Loại khách </label>
@@ -151,6 +157,8 @@ function detailCustomer(id) {
       </div>
                       `;
       $("#update-form").html(element);
+      let customerGender = `[value="${customers.customerGender}"]`;
+            $('input[name="update-gender"]').filter(customerGender).attr('checked', true);
     },
     error: function (error) {
       console.log(error);

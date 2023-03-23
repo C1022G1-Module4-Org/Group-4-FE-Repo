@@ -16,7 +16,7 @@ function renderTeaList (teaList) {
             style: "currency",
             currency: "VND",
           })}</p>
-        <button type="button" class="btn btn-success">Chọn</button>
+        <button type="button" class="btn btn-success" onclick= "addOrderTea(${tea.id})">Chọn</button>
       </div>
         `
     }
@@ -38,8 +38,32 @@ function getTeaList () {
             console.log(error);
         },
     });
-}
+};
 
 $(document).ready(function () {
     getTeaList();
-})
+});
+
+function addOrderTea(teaId) {
+    $.ajax({
+      type: "post",
+      url: `http://localhost:8080/order-detail`,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        quantity: 1,
+        coffeeShopDTO: { id: 1 },
+        productDTO: {id:teaId},
+        orderDTO: {id: 2},
+        totalMoney: 0
+      }),
+      success: function (data) {
+        alert("Thêm sản phẩm vào giỏ hàng thành công")
+      },
+      error: function (error) {
+        alert("Không thể thêm sản phẩm này vào giỏ hàng")
+      }
+    });
+};

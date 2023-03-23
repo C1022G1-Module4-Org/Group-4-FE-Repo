@@ -55,9 +55,9 @@ function showList(page) {
     url: `http://localhost:8080/branch?name=${search}&page=${page ? page : 0}`,
     success: function (data) {
       renderPage(data);
-      data = data.content;
       let contents = "";
-      let stt = 1;
+      let stt = (data.number - 1)*data.pageable.pageSize + 6;
+      data = data.content;
       for (let i = 0; i < data.length; i++) {
         contents += `<tr>`;
         contents += `<td>${stt++}`;
@@ -149,7 +149,7 @@ function addBranch(name, email, phone, address) {
       coffeeShopDTO: { id: 1 },
     }),
     success: function (data) {
-      alert("Thêm sản phẩm thành công!");
+      alert("Thêm chi nhánh thành công!");
       $("#addbranch").hide();
       $("body").removeClass("modal-open");
       $(".modal-backdrop").remove();
@@ -161,7 +161,7 @@ function addBranch(name, email, phone, address) {
           $(`#${key}-error`).text(error.responseJSON[key]);
         }
       }
-      alert("Lỗi khi thêm sản phẩm!");
+      alert("Lỗi khi thêm chi nhánh!");
     },
   });
 }
@@ -248,8 +248,8 @@ function updateBranch(id, name, email, phone, address) {
 function getBranchInfo(id) {
   $.ajax({
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     type: "get",
     url: `http://localhost:8080/branch/detail/${id}`,

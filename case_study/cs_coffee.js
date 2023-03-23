@@ -1,4 +1,4 @@
-function renderTeaList (coffeeList) {
+function renderCoffeeList (coffeeList) {
     
     let elements = "";
     for (let coffee of coffeeList) {
@@ -16,14 +16,14 @@ function renderTeaList (coffeeList) {
             style: "currency",
             currency: "VND",
           })}</p>
-        <button type="button" class="btn btn-success">Chọn</button>
+        <button type="button" class="btn btn-success" onclick= "addOrderCoffee(${coffee.id})">Chọn</button>
       </div>
         `
     }
     $("#tea-list").html(elements);
 }
 
-function getTeaList () {
+function getCoffeeList () {
     
     $.ajax({
         type: "get",
@@ -32,7 +32,7 @@ function getTeaList () {
             "Content-Type": "application/json",
         },
         success: function (data) {
-            renderTeaList(data);
+          renderCoffeeList(data);
         },
         error: function (error) {
             console.log(error);
@@ -41,5 +41,29 @@ function getTeaList () {
 }
 
 $(document).ready(function () {
-    getTeaList();
+  getCoffeeList();
 })
+
+function addOrderCoffee(coffeeId) {
+    $.ajax({
+      type: "post",
+      url: `http://localhost:8080/order-detail`,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        quantity: 1,
+        coffeeShopDTO: { id: 1 },
+        productDTO: {id:coffeeId},
+        orderDTO: {id: 1},
+        totalMoney: 0
+      }),
+      success: function (data) {
+        alert("Thêm sản phẩm vào giỏ hàng thành công")
+      },
+      error: function (error) {
+        alert("Không thể thêm sản phẩm này vào giỏ hàng")
+      }
+    });
+}

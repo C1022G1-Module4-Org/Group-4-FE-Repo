@@ -49,8 +49,7 @@ function getProductIdAndName(id, name) {
 // list
 function renderProductList(productList) {
   let elements = "";
-  let stt = (productList.number - 1)*productList.pageable.pageSize+ 4;
-  console.log(productList.number, productList.pageSize);
+  let stt = (productList.number - 1)*productList.pageable.pageSize + 4;
 
   for (let product of productList.content) {
     elements += 
@@ -194,7 +193,7 @@ function getSelectProductTypeList() {
       showProductTypeSelectOption(data);
     },
     error: function (error) {
-      // console.log(error);
+      console.log(error);
     },
   });
 }
@@ -313,8 +312,8 @@ function getProductInfo(id) {
   
   $.ajax({
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     type: "get",
     url: `http://localhost:8080/product/detail/${id}`,
