@@ -32,7 +32,7 @@
   <div class="root">
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
       <div class="container-fluid">
-        <a href="/food" class="navbar-brand">
+        <a href="cs_home.html" class="navbar-brand">
           <img src="https://thecupscoffee.vn/wp-content/uploads/2022/04/Logo-the-cups-coffee.png" alt="" width="50"
             height="50" decoding="async" />
         </a>
@@ -49,30 +49,26 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 240px">
                 <li>
-                  <a href="" class="dropdown-item fs-5">Khách hàng</a>
+                  <a href="cs_customer.html" class="dropdown-item fs-5">Khách hàng</a>
                 </li>
                 <li>
-                  <a href="" class="dropdown-item fs-5">Nhân viên</a>
+                  <a href="cs_employee.html" class="dropdown-item fs-5">Nhân viên</a>
                 </li>
                 <li>
-                  <a href="" class="dropdown-item fs-5">Chi nhánh</a>
+                  <a href="cs.shop.html" class="dropdown-item fs-5">Chi nhánh</a>
                 </li>
                 <li>
-                  <a href="" class="dropdown-item fs-5">Sản phẩm</a>
+                  <a href="cs_product.html" class="dropdown-item fs-5">Sản phẩm</a>
                 </li>
                 <li>
                   <a href="" class="dropdown-item fs-5">Order</a>
                 </li>
               </ul>
             </li>
-
-            <li class="nav-item">
-              <a class="nav-link active fa fa-shopping-cart" aria-current="page" href="#" style="font-size: 36px"></a>
-            </li>
           </ul>
           <div class="action nav-item">
             <div class="input-group">
-              <input class="form-control border-end-0 border" type="search" placeholder="Search" name="search" value=""
+              <input class="form-control border-end-0 border" type="search" placeholder="Tìm kiếm" name="search" value=""
                 id="search">
               <span class="input-group-append">
                 <button class="btn  bg-white border-start-0 border-bottom-0 border ms-n5" type="button"
@@ -81,13 +77,9 @@
                 </button>
               </span>
             </div>
-            <!-- <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search" value=""
-              id="search" />
-            <button class="btn btn-outline-success fa fa-search" type="button" onclick="getProductList()"></button> -->
-            </form>
             <div class="navbar-nav">
               <div class="hide__on__mobile logout">
-                <a href="" class="text-decoration-none text-black-50">
+                <a href="login.html" class="text-decoration-none text-black-50">
                   <i class="bx bx-log-out bx-rotate-180" aria-hidden="true" style="font-size: 24px">
                   </i>
                 </a>
@@ -96,7 +88,7 @@
           </div>
           <div class="navbar-nav mt-4">
             <div class="logout-responsive">
-              <a href="" class="text-decoration-none text-black-50">
+              <a href="login.html" class="text-decoration-none text-black-50">
                 <i class="bx bx-log-out bx-rotate-180" aria-hidden="true" style="font-size: 24px">
                 </i>
               </a>
@@ -114,7 +106,7 @@
               <div class="element-button">
                 <a class="btn btn-add btn-sm" href="#" id="them" title="Thêm" data-toggle="modal"
                   data-target="#addfood"><i class="fas fa-plus"></i>
-                  Tạo mới món ăn</a>
+                  Tạo mới sản phẩm</a>
               </div>
               <table id="tableStudent" class="table table-hover table-striped table-bordered">
                 <thead>
@@ -261,18 +253,21 @@
                 <label for="name" class="control-label col-xs-3">Tên món ăn<span class="span">*</span></label>
                 <div class="col-md-12">
                   <input required type="text" class="form-control" id="name" name="name">
+                  <div class="error-message text-danger" id="name-error"></div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="price" class="control-label col-xs-3">Giá bán<span class="span">*</span></label>
                 <div class="col-md-12">
                   <input required type="text" class="form-control" id="price" name="price">
+                  <div class="error-message text-danger" id="price-error"></div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="imgURL" class="control-label col-xs-3">Ảnh sản phẩm<span class="span">*</span></label>
                 <div class="col-md-12">
                   <input required type="text" class="form-control" id="imgURL" name="imgURL">
+                  <div class="error-message" id="imgURL-error"></div>
                 </div>
               </div>
               <div class="form-group">
@@ -290,7 +285,7 @@
       </div>
     </div>
     <!-- MODAL upate -->
-    <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false"
+    <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
       data-keyboard="false">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -307,12 +302,8 @@
     </div>
   </div>
 
-
-
-
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
   <script src="../case_study/cs_product.js"></script>
-  <!-- <script src="../js/bootstrap.js.map"></script> -->
   <script src="../js/jquery-3.2.1.min.js"></script>
   <script src="../js/popper.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>

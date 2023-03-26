@@ -21,26 +21,28 @@
 
 			<div class="signup">
 				<form>
-					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="User name" required="">
-					<input type="email" name="email" placeholder="Email" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Sign up</button>
+					<label for="chk" aria-hidden="true" style="margin-bottom: 0;">Sign up</label>
+					<input type="text" name="txt" placeholder="Full name" required="" id="fullname-register">
+					<input type="text" name="txt" placeholder="User name" required="" id="username-register">
+					<input type="email" name="email" placeholder="Email" required="" id="email-register">
+					<input type="password" name="pswd" placeholder="Password" required="" id="password-register">
+					<button type="button" onclick="register()">Sign up</button>
 				</form>
 			</div>
 
 			<div class="login">
-				<form>
-					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button>
-				</form>
+
+				<label for="chk" aria-hidden="true">Login</label>
+				<input type="text" name="username" placeholder="User Name" id="username" required="">
+				<input type="password" name="pswd" placeholder="Password" id="password" required="">
+				<button type="button" onclick="login()">Login</button>
+
 			</div>
 	</div>
 </body>
 </html>
 <!-- partial -->
-  
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>

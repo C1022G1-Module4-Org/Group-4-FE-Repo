@@ -6,12 +6,12 @@ function movePage(page) {
 function renderPage(productList) {
   let pageable = "";
   if (
-    productList.number == productList.totalPages - 1 &&
+    productList.number <= productList.totalPages - 1 &&
     productList.number > 0
   ) {
     pageable += `
     <button class="page-item btn btn-dark" 
-    onclick="movePage(${productList.number - 1})">
+    onclick="movePage(${productList.number - 1})" >
     <i class="ti-angle-left"></i>
     </button>
     `;
@@ -29,7 +29,7 @@ function renderPage(productList) {
     pageable += pageItem.prop("outerHTML");
   }
 
-  if (productList.number == 0 && productList.number < productList.totalPages) {
+  if (productList.number >= 0 && productList.number < productList.totalPages -1) {
     pageable += `
     <button class="page-item btn btn-dark" 
     onclick="movePage(${productList.number + 1})">
@@ -49,10 +49,11 @@ function getProductIdAndName(id, name) {
 // list
 function renderProductList(productList) {
   let elements = "";
-  let stt = 1;
+  let stt = (productList.number - 1)*productList.pageable.pageSize + 4;
 
   for (let product of productList.content) {
-    elements += `<tr>
+    elements += 
+          `<tr>
           <td>${stt++}</td>
           <td>${product.name}</td>
           <td><img src="${product.imgURL}" alt="" width="100px;"></td>
@@ -88,10 +89,17 @@ function getProductList(page) {
     }`,
     headers: {
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     success: function (data) {
-      renderProductList(data);
-      renderPage(data);
+      console.log(data);
+      if (data.content.length == 0) {
+        alert("Không tìm thấy sản phẩm");
+      } 
+      else {
+        renderProductList(data);
+        renderPage(data);
+      }
     },
     error: function (error) {
       console.log(error);
@@ -114,6 +122,10 @@ function deleteProduct(id) {
   $.ajax({
     type: "delete",
     url: `http://localhost:8080/product/${id}`,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
+    },
     success: function (data) {
       console.log("Xóa thành công");
       $("#exampleModal").hide();
@@ -129,20 +141,20 @@ function deleteProduct(id) {
 
 // add
 $("#add-product").submit(function (event) {
-  debugger;
   event.preventDefault();
   let name = $("#name").val();
   let price = $("#price").val();
   let imgURL = $("#imgURL").val();
   let productTypeDTO = $("#product-type").val();
+
   addProduct(name, price, imgURL, productTypeDTO);
 });
 
 function addProduct(name, price, imgURL, productTypeDTO) {
   $.ajax({
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     url: `http://localhost:8080/product`,
     type: "post",
@@ -159,7 +171,12 @@ function addProduct(name, price, imgURL, productTypeDTO) {
       $(".modal-backdrop").remove();
       getProductList();
     },
-    error: function () {
+    error: function (error) {
+      for (let key of Object.keys(error.responseJSON)) {
+        if ($(`#${key}-error`)) {
+          $(`#${key}-error`).text(error.responseJSON[key]);
+        }
+      }
       alert("Lỗi khi thêm sản phẩm!");
     },
   });
@@ -168,7 +185,7 @@ function addProduct(name, price, imgURL, productTypeDTO) {
 function getSelectProductTypeList() {
   $.ajax({
     type: "GET",
-    url: `http://localhost:8080/product-type`,
+    url: `http://localhost:8080/product-type?name=${""}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -194,7 +211,6 @@ function showProductTypeSelectOption(productTypes) {
 
   `</select>`;
   $("#productTypeDTO").html(element);
-  $("#product-typeDTO").html(element);
 }
 
 $(document).ready(function () {
@@ -202,24 +218,70 @@ $(document).ready(function () {
 });
 
 // update
+function getSelectProductTypeListForUpdate(id) {
+  $.ajax({
+    type: "GET",
+    url: `http://localhost:8080/product-type?name=${""}`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    success: function (data) {
+      showProductTypeSelectOptionForUpdate(data, id);
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
+
+function showProductTypeSelectOptionForUpdate(productTypes, selectedId) {
+  let element = "";
+  let selectedName = "";
+  let id = 0;
+
+  for (let productType of productTypes) {
+    for (let productDTO of productType.productDTOSet) {1
+      if (productDTO.id == selectedId) {
+        selectedName = productType.name;
+        id = productType.id;
+      }
+    }
+  }
+  element += `
+  <select class="form-control" id="product-type-DTO" name="product-type-DTO">
+  <option value="${id}">${selectedName}</option>`
+  for (let productType of productTypes) {
+    if (productType.name != selectedName) {
+      element += `<option value="${productType.id}">`;
+      element += productType.name;
+      `</option>`;
+    }
+  }
+
+  `</select>`;
+  $("#product-typeDTO").html(element);
+}
+
 $("#update-performing").submit(function(event){
+  
   event.preventDefault();
   let id = $("#update-id").val();
   let name = $("#update-name").val();
   let price = $("#update-price").val();
   let imgURL = $("#update-imgURL").val();
-  let productTypeDTO = $("#product-type").val();
+  let productTypeDTO = $("#product-type-DTO").val();
+
   updateProduct(id, name, price, imgURL, productTypeDTO);
 })
 
 function updateProduct(id, name, price, imgURL, productTypeDTO) {
-  debugger
+  
   $.ajax ({
     type: "PUT",
     url: `http://localhost:8080/product/edit/${id}`,
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     data: JSON.stringify({
       id: id,
@@ -235,27 +297,32 @@ function updateProduct(id, name, price, imgURL, productTypeDTO) {
       $(".modal-backdrop").remove();
       getProductList();
     },
-    error: function () {
+    error: function (error) {
+      for (let key of Object.keys(error.responseJSON)) {
+        if ($(`#error-${key}`)) {
+          $(`#error-${key}`).text(error.responseJSON[key]);
+        }
+      }
       alert("Lỗi khi sửa sản phẩm!");
     },
   })
 }
 
 function getProductInfo(id) {
+  
   $.ajax({
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem('token')
     },
     type: "get",
     url: `http://localhost:8080/product/detail/${id}`,
     success: function (data) {
-      getSelectProductTypeList();
+      getSelectProductTypeListForUpdate(id);
       let element = "";
       let product = data;
       element += 
       `
-      
       <div class="form-group">
         <div id="thongbao" class="text-danger" style="text-align: center;"></div>
       </div>
@@ -266,18 +333,21 @@ function getProductInfo(id) {
         <label for="update-name" class="control-label col-xs-3">Tên món ăn</label>
         <div class="col-md-12">
           <input type="text" class="form-control" id="update-name" value="${product.name}">
+          <div class="error-message text-danger" id="error-name"></div>
         </div>
       </div>
       <div class="form-group">
         <label for="update-price" class="control-label col-xs-3">Giá bán</label>
         <div class="col-md-12">
           <input type="text" class="form-control" id="update-price" value="${product.price}">
+          <div class="error-message text-danger" id="error-price"></div>
         </div>
       </div>
       <div class="form-group">
         <label for="update-imgURL" class="control-label col-xs-3">Ảnh sản phẩm</label>
         <div class="col-md-12">
           <input required type="text" class="form-control" id="update-imgURL" name="update-imgURL" value="${product.imgURL}">
+          <div class="error-message" id="error-imgURL"></div>
         </div>
       </div>
       <div class="form-group">
