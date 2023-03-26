@@ -297,10 +297,10 @@ function update() {
   let id = $("#update-id").val();
   let name = $("#edit-name").val();
   // let gender = $('input[name="edit-gender"]:checked').val();
-  let customerGender;
+  let gender;
   for (let el of document.getElementsByClassName('edit-gender')) {
       if (el.checked) {
-          customerGender = el.value;
+          gender = el.value;
           break;
       }
   }

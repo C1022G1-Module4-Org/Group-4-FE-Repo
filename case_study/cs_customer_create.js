@@ -48,6 +48,14 @@ function createCustomer(
       $("#createCustomer").hide();
       $("body").removeClass("modal-open");
       $(".modal-backdrop").remove();
+
+      $("#customerName").val("");
+      $("#customerDateOfBirth").val("");
+      $("#customerGender").val("");
+      $("#customerEmail").val("");
+      $("#customerAddress").val("");
+      $("#customerPhoneNumber").val("");
+
       getCustomer();
     },
     error: function (error) {

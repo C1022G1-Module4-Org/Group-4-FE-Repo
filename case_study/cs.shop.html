@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
     <title>Shop</title>
     <meta charset="UTF-8" />
     <meta
@@ -110,8 +108,8 @@
                 <div class="navbar-nav">
                     <div class="hide__on__mobile logout">
                         <a
-                                href="login.html"
-                                class="text-decoration-none text-black-50"
+                            onclick="removeToken()"
+                            class="text-decoration-none text-black-50"
                         >
                             <i
                                     class="bx bx-log-out bx-rotate-180"
@@ -348,6 +346,12 @@
 
 
 <!--<script src="../js/bootstrap.js.map"></script>-->
+<script>
+  function removeToken () {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+  }
+</script>
 <script src="js.shop.js"></script>
 <script src="../js/jquery-3.2.1.min.js"></script>
 <script src="../js/popper.min.js"></script>

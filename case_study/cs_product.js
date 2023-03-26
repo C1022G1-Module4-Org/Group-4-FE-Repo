@@ -5,40 +5,64 @@ function movePage(page) {
 
 function renderPage(productList) {
   let pageable = "";
-  if (
-    productList.number <= productList.totalPages - 1 &&
-    productList.number > 0
-  ) {
-    pageable += `
-    <button class="page-item btn btn-dark" 
-    onclick="movePage(${productList.number - 1})" >
-    <i class="ti-angle-left"></i>
-    </button>
-    `;
-  }
-  for (let i = 1; i <= productList.totalPages; i++) {
-    let pageItem = $(`<button class="page-item number btn btn-dark"
-                      onclick="movePage(${i - 1})">
-                      ${i}
-                      </button>`);
-    if (i === productList.number + 1) {
-      pageItem.addClass("active");
-    } else {
-      pageItem.removeClass("active");
-    }
-    pageable += pageItem.prop("outerHTML");
-  }
-
-  if (productList.number >= 0 && productList.number < productList.totalPages -1) {
-    pageable += `
-    <button class="page-item btn btn-dark" 
-    onclick="movePage(${productList.number + 1})">
-    <i class="ti-angle-right"></i>
-    </button>
-    `;
-  }
-  $("#pagination").html(pageable);
+if (
+  productList.number <= productList.totalPages - 1 &&
+  productList.number > 0
+) {
+  pageable += `
+  <button class="page-item btn btn-dark"
+  onclick="movePage(${productList.number - 1})" >
+  <i class="ti-angle-left"></i>
+  </button>
+  `;
 }
+for (let i = 1; i <= productList.totalPages; i++) {
+  let pageItem = $(`<button class="page-item number btn btn-dark"
+                    onclick="movePage(${i - 1})">
+                    ${i}
+                    </button>`);
+  if (i === productList.number + 1) {
+    pageItem.addClass("active");
+  } else {
+    pageItem.removeClass("active");
+  }
+  pageable += pageItem.prop("outerHTML");
+}
+
+if (productList.number >= 0 && productList.number < productList.totalPages -1) {
+  pageable += `
+  <button class="page-item btn btn-dark"
+  onclick="movePage(${productList.number + 1})">
+  <i class="ti-angle-right"></i>
+  </button>
+  `;
+}
+$("#pagination").html(pageable);
+}
+// function paging() {
+//   let search = document.getElementById("search").value;
+//   $('#pagination').pagination({
+//     dataSource: `http://localhost:8080/product?page=0&name=${search}`,
+//     type:'GET',
+//     locator: 'content',
+//     autoHidePrevious: true,
+//     autoHideNext: true,
+//     totalNumberLocator: function (response) {
+//       return response.totalPages
+//     },
+//     pageSize: 1,
+//     afterPreviousOnClick: function (event, pageNumber) {
+//       getProductList(pageNumber - 1)
+//     },
+//     afterPageOnClick: function (event, pageNumber) {
+//       getProductList(pageNumber - 1)
+//     },
+//     afterNextOnClick: function (event, pageNumber) {
+//       getProductList(pageNumber - 1)
+//     }
+//   })
+// }
+
 
 function getProductIdAndName(id, name) {
   document.getElementById("deleteId").value = id;
@@ -49,11 +73,10 @@ function getProductIdAndName(id, name) {
 // list
 function renderProductList(productList) {
   let elements = "";
-  let stt = (productList.number - 1)*productList.pageable.pageSize + 4;
+  let stt = (productList.number - 1) * productList.pageable.pageSize + 4;
 
   for (let product of productList.content) {
-    elements += 
-          `<tr>
+    elements += `<tr>
           <td>${stt++}</td>
           <td>${product.name}</td>
           <td><img src="${product.imgURL}" alt="" width="100px;"></td>
@@ -89,14 +112,13 @@ function getProductList(page) {
     }`,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + localStorage.getItem('token')
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
     success: function (data) {
       console.log(data);
       if (data.content.length == 0) {
         alert("Không tìm thấy sản phẩm");
-      } 
-      else {
+      } else {
         renderProductList(data);
         renderPage(data);
       }
@@ -109,6 +131,7 @@ function getProductList(page) {
 
 $(document).ready(function () {
   getProductList();
+  paging();
 });
 
 // delete
@@ -124,7 +147,7 @@ function deleteProduct(id) {
     url: `http://localhost:8080/product/${id}`,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + localStorage.getItem('token')
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
     success: function (data) {
       console.log("Xóa thành công");
@@ -154,7 +177,7 @@ function addProduct(name, price, imgURL, productTypeDTO) {
   $.ajax({
     headers: {
       "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + localStorage.getItem('token')
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
     url: `http://localhost:8080/product`,
     type: "post",
@@ -240,7 +263,8 @@ function showProductTypeSelectOptionForUpdate(productTypes, selectedId) {
   let id = 0;
 
   for (let productType of productTypes) {
-    for (let productDTO of productType.productDTOSet) {1
+    for (let productDTO of productType.productDTOSet) {
+      1;
       if (productDTO.id == selectedId) {
         selectedName = productType.name;
         id = productType.id;
@@ -249,7 +273,7 @@ function showProductTypeSelectOptionForUpdate(productTypes, selectedId) {
   }
   element += `
   <select class="form-control" id="product-type-DTO" name="product-type-DTO">
-  <option value="${id}">${selectedName}</option>`
+  <option value="${id}">${selectedName}</option>`;
   for (let productType of productTypes) {
     if (productType.name != selectedName) {
       element += `<option value="${productType.id}">`;
@@ -262,8 +286,7 @@ function showProductTypeSelectOptionForUpdate(productTypes, selectedId) {
   $("#product-typeDTO").html(element);
 }
 
-$("#update-performing").submit(function(event){
-  
+$("#update-performing").submit(function (event) {
   event.preventDefault();
   let id = $("#update-id").val();
   let name = $("#update-name").val();
@@ -272,16 +295,15 @@ $("#update-performing").submit(function(event){
   let productTypeDTO = $("#product-type-DTO").val();
 
   updateProduct(id, name, price, imgURL, productTypeDTO);
-})
+});
 
 function updateProduct(id, name, price, imgURL, productTypeDTO) {
-  
-  $.ajax ({
+  $.ajax({
     type: "PUT",
     url: `http://localhost:8080/product/edit/${id}`,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + localStorage.getItem('token')
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
     data: JSON.stringify({
       id: id,
@@ -305,15 +327,14 @@ function updateProduct(id, name, price, imgURL, productTypeDTO) {
       }
       alert("Lỗi khi sửa sản phẩm!");
     },
-  })
+  });
 }
 
 function getProductInfo(id) {
-  
   $.ajax({
     headers: {
       "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + localStorage.getItem('token')
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
     type: "get",
     url: `http://localhost:8080/product/detail/${id}`,
@@ -321,8 +342,7 @@ function getProductInfo(id) {
       getSelectProductTypeListForUpdate(id);
       let element = "";
       let product = data;
-      element += 
-      `
+      element += `
       <div class="form-group">
         <div id="thongbao" class="text-danger" style="text-align: center;"></div>
       </div>
@@ -359,12 +379,17 @@ function getProductInfo(id) {
         <button type="submit" id="btnSave" class="btn btn-success">Lưu</button>
         <button class="btn btn-danger" data-dismiss="modal">Hủy bỏ</a>
       </div>
-      `
+      `;
       $("#update-performing").html(element);
     },
-    error: function(error) {
+    error: function (error) {
       console.log(error);
-    }
-  })
+    },
+  });
 }
 
+// remove token
+function removeToken() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}

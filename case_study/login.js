@@ -18,13 +18,12 @@ function login() {
             for (let role of data.roleList) {
                 userRole = role;
             }
-            let userRoleTring = JSON.stringify(userRole.authority)
+            let userRoleTring = userRole.authority;
             localStorage.setItem('role', userRoleTring);
-            
             alert("Đăng nhập thành công")
-            if (userRoleTring == "ROLE_ADMIN") {
+            if (userRoleTring === "ROLE_ADMIN") {
                 window.location.href = 'cs_product.html';
-            } else {
+            } else if (userRoleTring === "ROLE_USER") {
                 window.location.href = 'cs_home.html';
             }
             // Chuyển hướng sang trang khác nếu cần thiết
@@ -56,7 +55,6 @@ function register () {
         }),
         success: function (data) {
             alert("Đăng ký thành công")
-            console.log(data);
         },
         error: function (error) {
             if (error.status === 400) {

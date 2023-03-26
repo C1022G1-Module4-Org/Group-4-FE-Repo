@@ -153,6 +153,10 @@ function addBranch(name, email, phone, address) {
       $("#addbranch").hide();
       $("body").removeClass("modal-open");
       $(".modal-backdrop").remove();
+      $("#name").val("") ;
+       $("#email").val("");
+       $("#phone").val("");
+       $("#address").val("");
       showList();
     },
     error: function (error) {
