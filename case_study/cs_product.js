@@ -131,7 +131,6 @@ function getProductList(page) {
 
 $(document).ready(function () {
   getProductList();
-  paging();
 });
 
 // delete
